@@ -141,6 +141,17 @@
     color:var(--ink-soft);
   }
 
+  .position-statement{
+    max-width:620px;
+    margin:26px auto 0;
+    font-family:'Cormorant Garamond', serif;
+    font-weight:600;
+    font-style:italic;
+    font-size:clamp(20px, 2.6vw, 25px);
+    line-height:1.45;
+    color:var(--ink);
+  }
+
   /* ---------- QUOTE DIVIDERS ---------- */
   .quote-divider{
     max-width:640px;
@@ -206,13 +217,31 @@
   .card{
     position:relative;
     background:var(--panel);
-    padding:34px 30px 28px;
+    padding:0 0 28px;
     border:1px solid var(--line);
     opacity:0;
     transform:translateY(18px);
     transition:opacity 0.7s ease, transform 0.7s ease, background-color 0.4s ease, border-color 0.4s ease;
+    overflow:hidden;
   }
   .card.in-view{ opacity:1; transform:translateY(0); }
+
+  .card-thumb{
+    width:100%;
+    aspect-ratio:16/9;
+    overflow:hidden;
+    border-bottom:1px solid var(--line);
+    background:var(--paper);
+  }
+  .card-thumb img{
+    width:100%; height:100%;
+    object-fit:cover;
+    display:block;
+    transition:transform 0.5s ease;
+  }
+  .card:hover .card-thumb img{ transform:scale(1.04); }
+
+  .card-body{ padding:26px 30px 0; }
 
   .card::before, .card::after,
   .card .cbl, .card .cbr{
@@ -258,6 +287,104 @@
     padding:5px 10px;
     background:rgba(155,135,212,0.08);
   }
+
+  .src-link{
+    display:inline-block;
+    margin-top:14px;
+    font-family:'Cinzel', serif;
+    font-size:10.5px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--gilt);
+    text-decoration:none;
+    border-bottom:1px solid transparent;
+    transition:color 0.25s ease, border-color 0.25s ease;
+  }
+  .src-link:hover{ color:var(--lilac); border-color:var(--lilac); }
+
+  /* ---------- HERO CTA ---------- */
+  .hero-cta{
+    display:flex;
+    justify-content:center;
+    gap:16px;
+    flex-wrap:wrap;
+    margin-top:36px;
+  }
+  .cta-btn{
+    font-family:'Cinzel', serif;
+    font-size:11.5px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    text-decoration:none;
+    padding:13px 26px;
+    border:1px solid var(--gilt);
+    color:var(--ink);
+    background:var(--panel);
+    transition:background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+  }
+  .cta-btn:hover{ transform:translateY(-2px); }
+  .cta-btn.primary{
+    background:var(--lilac);
+    color:var(--paper);
+    border-color:var(--lilac);
+  }
+  .cta-btn.primary:hover{ background:var(--steel); border-color:var(--steel); }
+
+  /* ---------- MISYON ---------- */
+  .mission{
+    max-width:680px;
+    margin:0 auto;
+    padding:20px 32px 70px;
+    text-align:center;
+  }
+  .mission p{
+    font-style:italic;
+    font-size:19px;
+    color:var(--ink-soft);
+    margin:0;
+  }
+  .stack-pills{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:9px;
+    margin-top:30px;
+  }
+
+  /* ---------- TIMELINE ---------- */
+  section.timeline-section{ padding:20px 32px 60px; }
+  .timeline-list{
+    max-width:640px;
+    margin:44px auto 0;
+    border-left:1px solid var(--line);
+    padding-left:28px;
+  }
+  .tl-row{ position:relative; margin-bottom:30px; }
+  .tl-row::before{
+    content:"";
+    position:absolute;
+    left:-33px; top:5px;
+    width:9px; height:9px;
+    border-radius:50%;
+    background:var(--gilt);
+  }
+  .tl-row .tl-period{
+    font-family:'Cinzel', serif;
+    font-size:11px;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    color:var(--gilt);
+    display:block;
+    margin-bottom:6px;
+  }
+  .tl-row h4{
+    font-family:'Cormorant Garamond', serif;
+    font-weight:600;
+    font-size:21px;
+    margin:0 0 6px;
+    color:var(--ink);
+  }
+  .tl-row p{ margin:0; color:var(--ink-soft); font-size:15.5px; }
 
   /* ---------- BAĞLANTILAR / KARTVİZİT KABİNESİ ---------- */
   section.links{
@@ -402,9 +529,21 @@
 <header class="hero">
   <h1 class="name">Tarık Hurma</h1>
   <div class="rule wide"></div>
+  <p class="position-statement">Akıllı uygulamalar ve etkileşimli sistemler tasarlayan bir yazılım geliştirici &amp; yapay zekâ meraklısı.</p>
   <p class="tagline">Bireysellik <span>&middot;</span> Eğitim <span>&middot;</span> Özgürlük</p>
   <p class="lede">Gerçek eğitim, insanın kendi bireyselliğini keşfetmesini sağlar. Bireyselliğini keşfeden kişi ise gerçek özgürlüğüne kavuşur ve onu korumayı bilir.</p>
+  <div class="hero-cta">
+    <a class="cta-btn primary" href="tarik-hurma-cv.pdf" target="_blank" rel="noopener">Özgeçmişi İndir (PDF)</a>
+    <a class="cta-btn" href="https://github.com/TarikSoftware" target="_blank" rel="noopener">GitHub&rsquo;ta Gör</a>
+  </div>
 </header>
+
+<section class="mission" id="misyon">
+  <p>Yazılımı ve yapay zekâyı yalnızca teknik araçlar olarak değil; anlatı kurmanın, dünya inşa etmenin ve insan davranışını anlamanın bir uzantısı olarak görüyorum. Her proje, bir mühendislik problemi kadar bir merak ve estetik meselesidir &mdash; bu yüzden kod kadar kurgu, sistem kadar felsefe önemlidir.</p>
+  <div class="stack-pills">
+    <span class="tag">Python</span><span class="tag">FastAPI</span><span class="tag">MongoDB</span><span class="tag">Unity / C#</span><span class="tag">Pygame</span><span class="tag">PyOpenGL</span><span class="tag">PyQt6</span><span class="tag">LoRA</span><span class="tag">Qwen3 / LLM</span><span class="tag">Stable Diffusion</span><span class="tag">Oyun Teorisi</span>
+  </div>
+</section>
 
 <div class="quote-divider">
   <svg class="fleuron" viewBox="0 0 100 40" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -425,29 +564,49 @@
     </div>
     <div class="cards">
       <div class="card"><span class="cbl"></span><span class="cbr"></span>
+      <div class="card-thumb"><img src="images/wynox.jpg" alt="Wynox görsel önizleme" loading="lazy"></div>
+      <div class="card-body">
         <h3><a href="https://www.youtube.com/watch?v=f5DbKw4Do-A" target="_blank" rel="noopener">Wynox</a></h3>
         <p>Python, pygame ve PyOpenGL ile yazılmış, Minecraft esintili bir 3B voksel oyunu. Sonsuz harita akışı ve VBO tabanlı özel bir render motoru barındırır.</p>
         <div class="tags"><span class="tag">Python</span><span class="tag">OpenGL</span><span class="tag">Voksel</span></div>
+        <a class="src-link" href="https://github.com/TarikSoftware" target="_blank" rel="noopener">Kaynak Kodu &#8599;</a>
+      </div>
       </div>
       <div class="card"><span class="cbl"></span><span class="cbr"></span>
+      <div class="card-thumb"><img src="images/glory-lavender-brew.jpg" alt="Glory Lavender Brew görsel önizleme" loading="lazy"></div>
+      <div class="card-body">
         <h3><a href="https://www.youtube.com/watch?v=tkILkFgYfqE" target="_blank" rel="noopener">Glory Lavender Brew</a></h3>
         <p>Unity&rsquo;de geliştirilen bir bitki pazarı simülasyonu. Yapay zeka destekli dinamik fiyatlandırma ve iki aşamalı bir mimariyle çalışan NPC diyalog sistemi içerir.</p>
         <div class="tags"><span class="tag">Unity</span><span class="tag">C#</span><span class="tag">AI NPC</span></div>
+        <a class="src-link" href="https://github.com/TarikSoftware" target="_blank" rel="noopener">Kaynak Kodu &#8599;</a>
+      </div>
       </div>
       <div class="card"><span class="cbl"></span><span class="cbr"></span>
+      <div class="card-thumb"><img src="images/wictophia.jpg" alt="Wictophia görsel önizleme" loading="lazy"></div>
+      <div class="card-body">
         <h3><a href="https://www.linkedin.com/feed/update/urn:li:activity:7482858267392630784/" target="_blank" rel="noopener">Wictophia</a></h3>
         <p>Victoria III&rsquo;ten ilham alan, Voronoi tabanlı bir il haritası ve iki aşamalı bir üretim ekonomisine sahip 2B strateji oyunu.</p>
         <div class="tags"><span class="tag">Python</span><span class="tag">Pygame</span><span class="tag">Strateji</span></div>
+        <a class="src-link" href="https://github.com/TarikSoftware" target="_blank" rel="noopener">Kaynak Kodu &#8599;</a>
+      </div>
       </div>
       <div class="card"><span class="cbl"></span><span class="cbr"></span>
+      <div class="card-thumb"><img src="images/swalera.jpg" alt="Swalera görsel önizleme" loading="lazy"></div>
+      <div class="card-body">
         <h3><a href="https://www.youtube.com/watch?v=MOntP0f1KW0&t=41s" target="_blank" rel="noopener">Swalera</a></h3>
         <p>Kurgusal dünya inşasının ve oyun tasarımının bir arada işlendiği, gelişimi süren bir proje.</p>
         <div class="tags"><span class="tag">Oyun Tasarımı</span><span class="tag">World-building</span></div>
+        <a class="src-link" href="https://github.com/TarikSoftware" target="_blank" rel="noopener">Kaynak Kodu &#8599;</a>
+      </div>
       </div>
       <div class="card"><span class="cbl"></span><span class="cbr"></span>
+      <div class="card-thumb"><img src="images/mioun.jpg" alt="Mioun görsel önizleme" loading="lazy"></div>
+      <div class="card-body">
         <h3><a href="https://www.linkedin.com/feed/update/urn:li:activity:7473067683954188288/" target="_blank" rel="noopener">Mioun</a></h3>
         <p>2D Multiplayer becerilerimi geliştirdiğim bir oyun projesi.</p>
         <div class="tags"><span class="tag">Python</span><span class="tag">Pygame</span><span class="tag">Multiplayer</span></div>
+        <a class="src-link" href="https://github.com/TarikSoftware" target="_blank" rel="noopener">Kaynak Kodu &#8599;</a>
+      </div>
       </div>
     </div>
   </div>
@@ -472,14 +631,22 @@
     </div>
     <div class="cards">
       <div class="card"><span class="cbl"></span><span class="cbr"></span>
+      <div class="card-thumb"><img src="images/ouirelle.jpg" alt="Ouirelle görsel önizleme" loading="lazy"></div>
+      <div class="card-body">
         <h3><a href="https://www.youtube.com/watch?v=9Y3pcrg6Vjs" target="_blank" rel="noopener">Ouirelle</a></h3>
         <p>Qwen3-8B tabanlı, LoRA ile ince ayarlanmış &ldquo;Lotus&rdquo; modelini çalıştıran özel bir yapay zeka asistan platformu. JWT ve API anahtarıyla kimlik doğrulama, SSE ile canlı akış ve görsel üretim için Peach AI entegrasyonu barındırır.</p>
         <div class="tags"><span class="tag">FastAPI</span><span class="tag">MongoDB</span><span class="tag">SSE</span><span class="tag">LoRA</span></div>
+        <a class="src-link" href="https://github.com/TarikSoftware" target="_blank" rel="noopener">Kaynak Kodu &#8599;</a>
+      </div>
       </div>
       <div class="card"><span class="cbl"></span><span class="cbr"></span>
+      <div class="card-thumb"><img src="images/peach-ai.jpg" alt="Peach AI görsel önizleme" loading="lazy"></div>
+      <div class="card-body">
         <h3>Peach AI</h3>
         <p>Sohbet arayüzüne gömülü bir <em>/draw</em> komutuyla çalışan, Stable Diffusion tabanlı görsel üretim modülü.</p>
         <div class="tags"><span class="tag">Stable Diffusion</span><span class="tag">Görsel Üretim</span></div>
+        <a class="src-link" href="https://github.com/TarikSoftware" target="_blank" rel="noopener">Kaynak Kodu &#8599;</a>
+      </div>
       </div>
     </div>
   </div>
@@ -491,8 +658,8 @@
     <path d="M50 8 L58 20 L50 32 L42 20 Z" stroke="currentColor" stroke-width="1"/>
     <circle cx="50" cy="20" r="2.5" fill="currentColor"/>
   </svg>
-  <blockquote>&ldquo;İnsan, doğadaki en zayıf kamıştır; fakat düşünen bir kamıştır.&rdquo;</blockquote>
-  <cite>Blaise Pascal</cite>
+  <blockquote>&ldquo;Bilmek yetmez, uygulamak gerekir; istemek yetmez, yapmak gerekir.&rdquo;</blockquote>
+  <cite>Johann Wolfgang von Goethe</cite>
 </div>
 
 <!-- ================= BAP III — UYGULAMALAR ================= -->
@@ -504,24 +671,66 @@
     </div>
     <div class="cards">
       <div class="card"><span class="cbl"></span><span class="cbr"></span>
+      <div class="card-thumb"><img src="images/pymelon.jpg" alt="PyMelon görsel önizleme" loading="lazy"></div>
+      <div class="card-body">
         <h3><a href="https://www.linkedin.com/feed/update/urn:li:activity:7479681885200240640/" target="_blank" rel="noopener">PyMelon</a></h3>
         <p>Python ve PyQt6 ile geliştirilen bir IDE uygulaması.</p>
         <div class="tags"><span class="tag">Python</span><span class="tag">PyQt6</span><span class="tag">IDE</span></div>
+        <a class="src-link" href="https://github.com/TarikSoftware" target="_blank" rel="noopener">Kaynak Kodu &#8599;</a>
+      </div>
       </div>
       <div class="card"><span class="cbl"></span><span class="cbr"></span>
+      <div class="card-thumb"><img src="images/cattleya-studio.jpg" alt="Cattleya Studio görsel önizleme" loading="lazy"></div>
+      <div class="card-body">
         <h3><a href="https://www.linkedin.com/feed/update/urn:li:activity:7477395109429444609/" target="_blank" rel="noopener">Cattleya Studio</a></h3>
         <p>Python tabanlı bir tasarım uygulaması.</p>
         <div class="tags"><span class="tag">Python</span><span class="tag">Tasarım</span></div>
+        <a class="src-link" href="https://github.com/TarikSoftware" target="_blank" rel="noopener">Kaynak Kodu &#8599;</a>
+      </div>
       </div>
       <div class="card"><span class="cbl"></span><span class="cbr"></span>
+      <div class="card-thumb"><img src="images/fantastic.jpg" alt="Fantastic görsel önizleme" loading="lazy"></div>
+      <div class="card-body">
         <h3><a href="https://sewileaportfolio.blogspot.com/2026/07/fantastic.html" target="_blank" rel="noopener">Fantastic</a></h3>
         <p>Python backend&rsquo;li bir sosyal medya projesi.</p>
         <div class="tags"><span class="tag">Python</span><span class="tag">Sosyal Medya</span></div>
+        <a class="src-link" href="https://github.com/TarikSoftware" target="_blank" rel="noopener">Kaynak Kodu &#8599;</a>
+      </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="quote-divider">
+  <svg class="fleuron" viewBox="0 0 100 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0 20 H38 M62 20 H100" stroke="currentColor" stroke-width="1"/>
+    <path d="M50 8 L58 20 L50 32 L42 20 Z" stroke="currentColor" stroke-width="1"/>
+    <circle cx="50" cy="20" r="2.5" fill="currentColor"/>
+  </svg>
+  <blockquote>&ldquo;Yıldızları doğurabilmek için insanın içinde hâlâ kaos barındırması gerekir.&rdquo;</blockquote>
+  <cite>Friedrich Nietzsche</cite>
+</div>
+
+<section class="bap" id="entelektuel">
+  <div class="wrap">
+    <div class="bap-head">
+      <h2 class="bap-title">Teoriler &amp; Araştırmalar</h2>
+      <p class="bap-sub">Kodun ötesinde kalan disiplin — okumak, sorgulamak, sistemleri anlamak.</p>
+    </div>
+    <div class="cards">
+      <div class="card"><span class="cbl"></span><span class="cbr"></span>
+      <div class="card-body">
+        <h3><a href="https://drive.google.com/file/d/1bQurWieCuQzclgyJnCGbFXxJn1miIh-2/view?usp=sharing" target="_blank" rel="noopener">Oyun Teorisi</a></h3>
+        <p>Romantik eşleşme piyasalarını ve stratejik karar alma süreçlerini oyun teorisi merceğinden inceleyen, grafiklerle desteklenmiş akademik araştırmalar.</p>
+        <div class="tags"><span class="tag">Game Theory</span><span class="tag">Araştırma</span></div>
+      </div>
       </div>
       <div class="card"><span class="cbl"></span><span class="cbr"></span>
-        <h3><a href="https://www.linkedin.com/feed/update/urn:li:activity:7473585138308710400/" target="_blank" rel="noopener">Diego Instagram Bot</a></h3>
-        <p>Instagram üzerinde otomasyon için geliştirilen bir bot.</p>
-        <div class="tags"><span class="tag">Python</span><span class="tag">Otomasyon</span></div>
+      <div class="card-body">
+        <h3><a href="https://drive.google.com/file/d/1bQurWieCuQzclgyJnCGbFXxJn1miIh-2/view?usp=sharing" target="_blank" rel="noopener">Prompt Mühendisliği</a></h3>
+        <p>Büyük dil modellerinin davranışını yönlendirmek için sistematik prompt tasarımı, ince ayar veri kümeleri ve akıl yürütme izleri üzerine çalışmalar.</p>
+        <div class="tags"><span class="tag">LLM</span><span class="tag">Prompt Design</span></div>
+      </div>
       </div>
     </div>
   </div>
