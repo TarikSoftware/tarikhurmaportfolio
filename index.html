@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tarık Hurma — Portföy</title>
+<title id="pageTitle" data-i18n="page_title">Tarık Hurma — Portföy</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Cinzel:wght@400;500;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
@@ -87,10 +87,12 @@
   .theme-toggle:focus-visible{ outline:2px solid var(--lilac); outline-offset:3px; }
   .music-toggle{ right:84px; font-size:16px; }
   .music-toggle.is-playing{ color:var(--lilac); border-color:var(--lilac); }
+  .lang-toggle{ right:142px; font-size:13px; font-family:'Cinzel', serif; letter-spacing:0.05em; width:46px; }
 
   @media (max-width: 560px){
     .theme-toggle{ top:14px; right:14px; width:40px; height:40px; font-size:15px; }
     .music-toggle{ right:62px; }
+    .lang-toggle{ right:110px; width:40px; height:40px; font-size:12px; }
   }
 
   .wrap{ max-width:var(--max); margin:0 auto; padding:0 32px; }
@@ -209,7 +211,10 @@
 
   .cards{
     display:grid;
-    grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
+    grid-template-columns:1fr;
+    max-width:760px;
+    margin-left:auto;
+    margin-right:auto;
     gap:28px;
     margin-top:44px;
   }
@@ -493,8 +498,9 @@
 <body>
 
 <audio id="bgAudio" src="pendulums-grace.mp3" loop preload="none"></audio>
-<button class="theme-toggle music-toggle" id="musicToggle" type="button" aria-label="Müziği çal veya durdur" title="The Pendulum's Grace — çalmak için tıkla">♪</button>
-<button class="theme-toggle" id="themeToggle" type="button" aria-label="Gece / gündüz modunu değiştir" title="Gece / gündüz modu">☾</button>
+<button class="theme-toggle music-toggle" id="musicToggle" type="button" aria-label="Müziği çal veya durdur" title="The Pendulum's Grace — çalmak için tıkla" data-playing="false">♪</button>
+<button class="theme-toggle" id="themeToggle" type="button" data-i18n-aria="theme_aria" aria-label="Gece / gündüz modunu değiştir" data-i18n-title="theme_title" title="Gece / gündüz modu">☾</button>
+<button class="theme-toggle lang-toggle" id="langToggle" type="button" aria-label="Dili değiştir / Change language" title="Dili değiştir / Change language">EN</button>
 
 <svg class="frame-corner fc-tl" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path d="M4 4 C 40 4, 4 40, 4 4" stroke="#9B87D4" stroke-width="1"/>
@@ -529,19 +535,19 @@
 <header class="hero">
   <h1 class="name">Tarık Hurma</h1>
   <div class="rule wide"></div>
-  <p class="position-statement">Akıllı uygulamalar ve etkileşimli sistemler tasarlayan bir yazılım geliştirici &amp; yapay zekâ meraklısı.</p>
-  <p class="tagline">Bireysellik <span>&middot;</span> Eğitim <span>&middot;</span> Özgürlük</p>
-  <p class="lede">Gerçek eğitim, insanın kendi bireyselliğini keşfetmesini sağlar. Bireyselliğini keşfeden kişi ise gerçek özgürlüğüne kavuşur ve onu korumayı bilir.</p>
+  <p class="position-statement" data-i18n="hero_position">Akıllı uygulamalar ve etkileşimli sistemler tasarlayan bir yazılım geliştirici &amp; yapay zekâ meraklısı.</p>
+  <p class="tagline"><span data-i18n="tag_individuality">Bireysellik</span> <span>&middot;</span> <span data-i18n="tag_education">Eğitim</span> <span>&middot;</span> <span data-i18n="tag_freedom">Özgürlük</span></p>
+  <p class="lede" data-i18n="hero_lede">Gerçek eğitim, insanın kendi bireyselliğini keşfetmesini sağlar. Bireyselliğini keşfeden kişi ise gerçek özgürlüğüne kavuşur ve onu korumayı bilir.</p>
   <div class="hero-cta">
-    <a class="cta-btn primary" href="tarik-hurma-cv.pdf" target="_blank" rel="noopener">Özgeçmişi İndir (PDF)</a>
-    <a class="cta-btn" href="https://github.com/TarikSoftware" target="_blank" rel="noopener">GitHub&rsquo;ta Gör</a>
+    <a class="cta-btn primary" href="tarik-hurma-cv.pdf" target="_blank" rel="noopener" data-i18n="cta_cv">Özgeçmişi İndir (PDF)</a>
+    <a class="cta-btn" href="https://github.com/TarikSoftware" target="_blank" rel="noopener" data-i18n="cta_github">GitHub&rsquo;ta Gör</a>
   </div>
 </header>
 
 <section class="mission" id="misyon">
-  <p>Yazılımı ve yapay zekâyı yalnızca teknik araçlar olarak değil; anlatı kurmanın, dünya inşa etmenin ve insan davranışını anlamanın bir uzantısı olarak görüyorum. Her proje, bir mühendislik problemi kadar bir merak ve estetik meselesidir &mdash; bu yüzden kod kadar kurgu, sistem kadar felsefe önemlidir.</p>
+  <p data-i18n="mission_text">Yazılımı ve yapay zekâyı yalnızca teknik araçlar olarak değil; anlatı kurmanın, dünya inşa etmenin ve insan davranışını anlamanın bir uzantısı olarak görüyorum. Her proje, bir mühendislik problemi kadar bir merak ve estetik meselesidir &mdash; bu yüzden kod kadar kurgu, sistem kadar felsefe önemlidir.</p>
   <div class="stack-pills">
-    <span class="tag">Python</span><span class="tag">FastAPI</span><span class="tag">MongoDB</span><span class="tag">Unity / C#</span><span class="tag">Pygame</span><span class="tag">PyOpenGL</span><span class="tag">PyQt6</span><span class="tag">LoRA</span><span class="tag">Qwen3 / LLM</span><span class="tag">Stable Diffusion</span><span class="tag">Oyun Teorisi</span>
+    <span class="tag">Python</span><span class="tag">FastAPI</span><span class="tag">MongoDB</span><span class="tag">Unity / C#</span><span class="tag">Pygame</span><span class="tag">PyOpenGL</span><span class="tag">PyQt6</span><span class="tag">LoRA</span><span class="tag">Qwen3 / LLM</span><span class="tag">Stable Diffusion</span><span class="tag" data-i18n="tag_game_theory">Oyun Teorisi</span>
   </div>
 </section>
 
@@ -551,7 +557,7 @@
     <path d="M50 8 L58 20 L50 32 L42 20 Z" stroke="currentColor" stroke-width="1"/>
     <circle cx="50" cy="20" r="2.5" fill="currentColor"/>
   </svg>
-  <blockquote>&ldquo;Bilgi, kendi başına bir güçtür.&rdquo;</blockquote>
+  <blockquote data-i18n="quote_bacon">&ldquo;Bilgi, kendi başına bir güçtür.&rdquo;</blockquote>
   <cite>Francis Bacon</cite>
 </div>
 
@@ -559,53 +565,53 @@
 <section class="bap" id="oyun">
   <div class="wrap">
     <div class="bap-head">
-      <h2 class="bap-title">Kurgusal Dünyalar</h2>
-      <p class="bap-sub">Her dünya, kendi fiziği ve ekonomisiyle var olur.</p>
+      <h2 class="bap-title" data-i18n="bap1_title">Kurgusal Dünyalar</h2>
+      <p class="bap-sub" data-i18n="bap1_sub">Her dünya, kendi fiziği ve ekonomisiyle var olur.</p>
     </div>
     <div class="cards">
       <div class="card"><span class="cbl"></span><span class="cbr"></span>
       <div class="card-thumb"><img src="images/wynox.jpg" alt="Wynox görsel önizleme" loading="lazy"></div>
       <div class="card-body">
         <h3><a href="https://www.youtube.com/watch?v=f5DbKw4Do-A" target="_blank" rel="noopener">Wynox</a></h3>
-        <p>Python, pygame ve PyOpenGL ile yazılmış, 3B voksel oyunu. Sonsuz harita akışı ve VBO tabanlı özel bir render motoru barındırır.</p>
-        <div class="tags"><span class="tag">Python</span><span class="tag">OpenGL</span><span class="tag">Voksel</span></div>
-        <a class="src-link" href="https://github.com/TarikSoftware" target="_blank" rel="noopener">Kaynak Kodu &#8599;</a>
+        <p data-i18n="card_wynox_desc">Python, pygame ve PyOpenGL ile yazılmış, 3B voksel oyunu. Sonsuz harita akışı ve VBO tabanlı özel bir render motoru barındırır.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">OpenGL</span><span class="tag" data-i18n="tag_voxel">Voksel</span></div>
+        <a class="src-link" href="https://github.com/TarikSoftware" target="_blank" rel="noopener" data-i18n="src_link">Kaynak Kodu &#8599;</a>
       </div>
       </div>
       <div class="card"><span class="cbl"></span><span class="cbr"></span>
       <div class="card-thumb"><img src="images/glory-lavender-brew.jpg" alt="Glory Lavender Brew görsel önizleme" loading="lazy"></div>
       <div class="card-body">
         <h3><a href="https://www.youtube.com/watch?v=tkILkFgYfqE" target="_blank" rel="noopener">Glory Lavender Brew</a></h3>
-        <p>Unity&rsquo;de geliştirilen bir bitki pazarı simülasyonu. Yapay zeka destekli dinamik fiyatlandırma ve iki aşamalı bir mimariyle çalışan NPC diyalog sistemi içerir.</p>
+        <p data-i18n="card_glb_desc">Unity&rsquo;de geliştirilen bir bitki pazarı simülasyonu. Yapay zeka destekli dinamik fiyatlandırma ve iki aşamalı bir mimariyle çalışan NPC diyalog sistemi içerir.</p>
         <div class="tags"><span class="tag">Unity</span><span class="tag">C#</span><span class="tag">AI NPC</span></div>
-        <a class="src-link" href="https://github.com/TarikSoftware" target="_blank" rel="noopener">Kaynak Kodu &#8599;</a>
+        <a class="src-link" href="https://github.com/TarikSoftware" target="_blank" rel="noopener" data-i18n="src_link">Kaynak Kodu &#8599;</a>
       </div>
       </div>
       <div class="card"><span class="cbl"></span><span class="cbr"></span>
       <div class="card-thumb"><img src="images/wictophia.jpg" alt="Wictophia görsel önizleme" loading="lazy"></div>
       <div class="card-body">
         <h3><a href="https://www.linkedin.com/feed/update/urn:li:activity:7482858267392630784/" target="_blank" rel="noopener">Wictophia</a></h3>
-        <p>Voronoi tabanlı bir il haritası ve iki aşamalı bir üretim ekonomisine sahip 2B strateji oyunu.</p>
-        <div class="tags"><span class="tag">Python</span><span class="tag">Pygame</span><span class="tag">Strateji</span></div>
-        <a class="src-link" href="https://github.com/TarikSoftware" target="_blank" rel="noopener">Kaynak Kodu &#8599;</a>
+        <p data-i18n="card_wictophia_desc">Voronoi tabanlı bir il haritası ve iki aşamalı bir üretim ekonomisine sahip 2B strateji oyunu.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">Pygame</span><span class="tag" data-i18n="tag_strategy">Strateji</span></div>
+        <a class="src-link" href="https://github.com/TarikSoftware" target="_blank" rel="noopener" data-i18n="src_link">Kaynak Kodu &#8599;</a>
       </div>
       </div>
       <div class="card"><span class="cbl"></span><span class="cbr"></span>
       <div class="card-thumb"><img src="images/swalera.jpg" alt="Swalera görsel önizleme" loading="lazy"></div>
       <div class="card-body">
         <h3><a href="https://www.youtube.com/watch?v=MOntP0f1KW0&t=41s" target="_blank" rel="noopener">Swalera</a></h3>
-        <p>Kurgusal dünya inşasının ve oyun tasarımının bir arada işlendiği, gelişimi süren bir proje.</p>
-        <div class="tags"><span class="tag">Oyun Tasarımı</span><span class="tag">World-building</span></div>
-        <a class="src-link" href="https://github.com/TarikSoftware" target="_blank" rel="noopener">Kaynak Kodu &#8599;</a>
+        <p data-i18n="card_swalera_desc">Kurgusal dünya inşasının ve oyun tasarımının bir arada işlendiği, gelişimi süren bir proje.</p>
+        <div class="tags"><span class="tag" data-i18n="tag_game_design">Oyun Tasarımı</span><span class="tag">World-building</span></div>
+        <a class="src-link" href="https://github.com/TarikSoftware" target="_blank" rel="noopener" data-i18n="src_link">Kaynak Kodu &#8599;</a>
       </div>
       </div>
       <div class="card"><span class="cbl"></span><span class="cbr"></span>
       <div class="card-thumb"><img src="images/mioun.jpg" alt="Mioun görsel önizleme" loading="lazy"></div>
       <div class="card-body">
         <h3><a href="https://www.linkedin.com/feed/update/urn:li:activity:7473067683954188288/" target="_blank" rel="noopener">Mioun</a></h3>
-        <p>2D Multiplayer becerilerimi geliştirdiğim bir oyun projesi.</p>
+        <p data-i18n="card_mioun_desc">2D Multiplayer becerilerimi geliştirdiğim bir oyun projesi.</p>
         <div class="tags"><span class="tag">Python</span><span class="tag">Pygame</span><span class="tag">Multiplayer</span></div>
-        <a class="src-link" href="https://github.com/TarikSoftware" target="_blank" rel="noopener">Kaynak Kodu &#8599;</a>
+        <a class="src-link" href="https://github.com/TarikSoftware" target="_blank" rel="noopener" data-i18n="src_link">Kaynak Kodu &#8599;</a>
       </div>
       </div>
     </div>
@@ -618,7 +624,7 @@
     <path d="M50 8 L58 20 L50 32 L42 20 Z" stroke="currentColor" stroke-width="1"/>
     <circle cx="50" cy="20" r="2.5" fill="currentColor"/>
   </svg>
-  <blockquote>&ldquo;Hayal gücü, keşfin gerçek kapı bekçisidir.&rdquo;</blockquote>
+  <blockquote data-i18n="quote_lovelace">&ldquo;Hayal gücü, keşfin gerçek kapı bekçisidir.&rdquo;</blockquote>
   <cite>Ada Lovelace</cite>
 </div>
 
@@ -626,26 +632,26 @@
 <section class="bap" id="yapayzeka">
   <div class="wrap">
     <div class="bap-head">
-      <h2 class="bap-title">Düşünen Makineler</h2>
-      <p class="bap-sub">Mekanik akıl yürütmenin eşiğinde küçük deneyler.</p>
+      <h2 class="bap-title" data-i18n="bap2_title">Düşünen Makineler</h2>
+      <p class="bap-sub" data-i18n="bap2_sub">Mekanik akıl yürütmenin eşiğinde küçük deneyler.</p>
     </div>
     <div class="cards">
       <div class="card"><span class="cbl"></span><span class="cbr"></span>
       <div class="card-thumb"><img src="images/ouirelle.jpg" alt="Ouirelle görsel önizleme" loading="lazy"></div>
       <div class="card-body">
         <h3><a href="https://www.youtube.com/watch?v=9Y3pcrg6Vjs" target="_blank" rel="noopener">Ouirelle</a></h3>
-        <p>Qwen3-8B tabanlı, LoRA ile ince ayarlanmış &ldquo;Lotus&rdquo; modelini çalıştıran özel bir yapay zeka asistan platformu. JWT ve API anahtarıyla kimlik doğrulama, SSE ile canlı akış ve görsel üretim için Peach AI entegrasyonu barındırır.</p>
+        <p data-i18n="card_ouirelle_desc">Qwen3-8B tabanlı, LoRA ile ince ayarlanmış &ldquo;Lotus&rdquo; modelini çalıştıran özel bir yapay zeka asistan platformu. JWT ve API anahtarıyla kimlik doğrulama, SSE ile canlı akış ve görsel üretim için Peach AI entegrasyonu barındırır.</p>
         <div class="tags"><span class="tag">FastAPI</span><span class="tag">MongoDB</span><span class="tag">SSE</span><span class="tag">LoRA</span></div>
-        <a class="src-link" href="https://github.com/TarikSoftware" target="_blank" rel="noopener">Kaynak Kodu &#8599;</a>
+        <a class="src-link" href="https://github.com/TarikSoftware" target="_blank" rel="noopener" data-i18n="src_link">Kaynak Kodu &#8599;</a>
       </div>
       </div>
       <div class="card"><span class="cbl"></span><span class="cbr"></span>
       <div class="card-thumb"><img src="images/peach-ai.jpg" alt="Peach AI görsel önizleme" loading="lazy"></div>
       <div class="card-body">
         <h3>Peach AI</h3>
-        <p>Sohbet arayüzüne gömülü bir <em>/draw</em> komutuyla çalışan, Stable Diffusion tabanlı görsel üretim modülü.</p>
-        <div class="tags"><span class="tag">Stable Diffusion</span><span class="tag">Görsel Üretim</span></div>
-        <a class="src-link" href="https://github.com/TarikSoftware" target="_blank" rel="noopener">Kaynak Kodu &#8599;</a>
+        <p data-i18n="card_peach_desc">Sohbet arayüzüne gömülü bir <em>/draw</em> komutuyla çalışan, Stable Diffusion tabanlı görsel üretim modülü.</p>
+        <div class="tags"><span class="tag">Stable Diffusion</span><span class="tag" data-i18n="tag_image_gen">Görsel Üretim</span></div>
+        <a class="src-link" href="https://github.com/TarikSoftware" target="_blank" rel="noopener" data-i18n="src_link">Kaynak Kodu &#8599;</a>
       </div>
       </div>
     </div>
@@ -658,7 +664,7 @@
     <path d="M50 8 L58 20 L50 32 L42 20 Z" stroke="currentColor" stroke-width="1"/>
     <circle cx="50" cy="20" r="2.5" fill="currentColor"/>
   </svg>
-  <blockquote>&ldquo;Bilmek yetmez, uygulamak gerekir; istemek yetmez, yapmak gerekir.&rdquo;</blockquote>
+  <blockquote data-i18n="quote_goethe">&ldquo;Bilmek yetmez, uygulamak gerekir; istemek yetmez, yapmak gerekir.&rdquo;</blockquote>
   <cite>Johann Wolfgang von Goethe</cite>
 </div>
 
@@ -666,35 +672,35 @@
 <section class="bap" id="uygulamalar">
   <div class="wrap">
     <div class="bap-head">
-      <h2 class="bap-title">Uygulamalar</h2>
-      <p class="bap-sub">Atelier Numérique — ürüne dönüşen fikirler.</p>
+      <h2 class="bap-title" data-i18n="bap3_title">Uygulamalar</h2>
+      <p class="bap-sub" data-i18n="bap3_sub">Atelier Numérique — ürüne dönüşen fikirler.</p>
     </div>
     <div class="cards">
       <div class="card"><span class="cbl"></span><span class="cbr"></span>
       <div class="card-thumb"><img src="images/pymelon.jpg" alt="PyMelon görsel önizleme" loading="lazy"></div>
       <div class="card-body">
         <h3><a href="https://www.linkedin.com/feed/update/urn:li:activity:7479681885200240640/" target="_blank" rel="noopener">PyMelon</a></h3>
-        <p>Python ve PyQt6 ile geliştirilen bir IDE uygulaması.</p>
+        <p data-i18n="card_pymelon_desc">Python ve PyQt6 ile geliştirilen bir IDE uygulaması.</p>
         <div class="tags"><span class="tag">Python</span><span class="tag">PyQt6</span><span class="tag">IDE</span></div>
-        <a class="src-link" href="https://github.com/TarikSoftware" target="_blank" rel="noopener">Kaynak Kodu &#8599;</a>
+        <a class="src-link" href="https://github.com/TarikSoftware" target="_blank" rel="noopener" data-i18n="src_link">Kaynak Kodu &#8599;</a>
       </div>
       </div>
       <div class="card"><span class="cbl"></span><span class="cbr"></span>
       <div class="card-thumb"><img src="images/cattleya-studio.jpg" alt="Cattleya Studio görsel önizleme" loading="lazy"></div>
       <div class="card-body">
         <h3><a href="https://www.linkedin.com/feed/update/urn:li:activity:7477395109429444609/" target="_blank" rel="noopener">Cattleya Studio</a></h3>
-        <p>Python tabanlı bir tasarım uygulaması.</p>
-        <div class="tags"><span class="tag">Python</span><span class="tag">Tasarım</span></div>
-        <a class="src-link" href="https://github.com/TarikSoftware" target="_blank" rel="noopener">Kaynak Kodu &#8599;</a>
+        <p data-i18n="card_cattleya_desc">Python tabanlı bir tasarım uygulaması.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag" data-i18n="tag_design">Tasarım</span></div>
+        <a class="src-link" href="https://github.com/TarikSoftware" target="_blank" rel="noopener" data-i18n="src_link">Kaynak Kodu &#8599;</a>
       </div>
       </div>
       <div class="card"><span class="cbl"></span><span class="cbr"></span>
       <div class="card-thumb"><img src="images/fantastic.jpg" alt="Fantastic görsel önizleme" loading="lazy"></div>
       <div class="card-body">
         <h3><a href="https://sewileaportfolio.blogspot.com/2026/07/fantastic.html" target="_blank" rel="noopener">Fantastic</a></h3>
-        <p>Python backend&rsquo;li bir sosyal medya projesi.</p>
-        <div class="tags"><span class="tag">Python</span><span class="tag">Sosyal Medya</span></div>
-        <a class="src-link" href="https://github.com/TarikSoftware" target="_blank" rel="noopener">Kaynak Kodu &#8599;</a>
+        <p data-i18n="card_fantastic_desc">Python backend&rsquo;li bir sosyal medya projesi.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag" data-i18n="tag_social_media">Sosyal Medya</span></div>
+        <a class="src-link" href="https://github.com/TarikSoftware" target="_blank" rel="noopener" data-i18n="src_link">Kaynak Kodu &#8599;</a>
       </div>
       </div>
     </div>
@@ -707,28 +713,28 @@
     <path d="M50 8 L58 20 L50 32 L42 20 Z" stroke="currentColor" stroke-width="1"/>
     <circle cx="50" cy="20" r="2.5" fill="currentColor"/>
   </svg>
-  <blockquote>&ldquo;Yıldızları doğurabilmek için insanın içinde hâlâ kaos barındırması gerekir.&rdquo;</blockquote>
+  <blockquote data-i18n="quote_nietzsche">&ldquo;Yıldızları doğurabilmek için insanın içinde hâlâ kaos barındırması gerekir.&rdquo;</blockquote>
   <cite>Friedrich Nietzsche</cite>
 </div>
 
 <section class="bap" id="entelektuel">
   <div class="wrap">
     <div class="bap-head">
-      <h2 class="bap-title">Teoriler &amp; Araştırmalar</h2>
-      <p class="bap-sub">Kodun ötesinde kalan disiplin — okumak, sorgulamak, sistemleri anlamak.</p>
+      <h2 class="bap-title" data-i18n="bap4_title">Teoriler &amp; Araştırmalar</h2>
+      <p class="bap-sub" data-i18n="bap4_sub">Kodun ötesinde kalan disiplin — okumak, sorgulamak, sistemleri anlamak.</p>
     </div>
     <div class="cards">
       <div class="card"><span class="cbl"></span><span class="cbr"></span>
       <div class="card-body">
-        <h3><a href="https://drive.google.com/file/d/1bQurWieCuQzclgyJnCGbFXxJn1miIh-2/view?usp=sharing" target="_blank" rel="noopener">Oyun Teorisi</a></h3>
-        <p>Stratejik karar alma süreçlerini oyun teorisi merceğinden inceleyen, grafiklerle desteklenmiş akademik araştırmalar.</p>
-        <div class="tags"><span class="tag">Game Theory</span><span class="tag">Araştırma</span></div>
+        <h3><a href="https://drive.google.com/file/d/1bQurWieCuQzclgyJnCGbFXxJn1miIh-2/view?usp=sharing" target="_blank" rel="noopener" data-i18n="tag_game_theory">Oyun Teorisi</a></h3>
+        <p data-i18n="card_theory1_desc">Stratejik karar alma süreçlerini oyun teorisi merceğinden inceleyen, grafiklerle desteklenmiş akademik araştırmalar.</p>
+        <div class="tags"><span class="tag">Game Theory</span><span class="tag" data-i18n="tag_research">Araştırma</span></div>
       </div>
       </div>
       <div class="card"><span class="cbl"></span><span class="cbr"></span>
       <div class="card-body">
-        <h3><a href="https://drive.google.com/file/d/1bQurWieCuQzclgyJnCGbFXxJn1miIh-2/view?usp=sharing" target="_blank" rel="noopener">Prompt Mühendisliği</a></h3>
-        <p>Büyük dil modellerinin davranışını yönlendirmek için sistematik prompt tasarımı, ince ayar veri kümeleri ve akıl yürütme izleri üzerine çalışmalar.</p>
+        <h3><a href="https://drive.google.com/file/d/1bQurWieCuQzclgyJnCGbFXxJn1miIh-2/view?usp=sharing" target="_blank" rel="noopener" data-i18n="link_prompt_eng_title">Prompt Mühendisliği</a></h3>
+        <p data-i18n="card_theory2_desc">Büyük dil modellerinin davranışını yönlendirmek için sistematik prompt tasarımı, ince ayar veri kümeleri ve akıl yürütme izleri üzerine çalışmalar.</p>
         <div class="tags"><span class="tag">LLM</span><span class="tag">Prompt Design</span></div>
       </div>
       </div>
@@ -741,9 +747,9 @@
 <section class="links" id="baglantilar">
   <div class="wrap">
     <div class="bap-head">
-      <p class="bap-num">Kartvizit Kabinesi</p>
-      <h2 class="bap-title">Bulunduğu Yerler</h2>
-      <p class="bap-sub">Çalışmaların ve izlerin dağıldığı adresler.</p>
+      <p class="bap-num" data-i18n="links_kicker">Kartvizit Kabinesi</p>
+      <h2 class="bap-title" data-i18n="links_title">Bulunduğu Yerler</h2>
+      <p class="bap-sub" data-i18n="links_sub">Çalışmaların ve izlerin dağıldığı adresler.</p>
     </div>
     <div class="card-index">
       <a class="calling-card" href="https://github.com/TarikSoftware" target="_blank" rel="noopener">
@@ -792,9 +798,9 @@
     <path d="M50 8 L58 20 L50 32 L42 20 Z" stroke="currentColor" stroke-width="1"/>
     <circle cx="50" cy="20" r="2.5" fill="currentColor"/>
   </svg>
-  <blockquote>&ldquo;Hayatta hiçbir şeyden korkulmamalı, yalnızca anlaşılmalıdır. Şimdi, daha az korkmak için daha çok anlama zamanıdır.&rdquo;</blockquote>
+  <blockquote data-i18n="quote_curie">&ldquo;Hayatta hiçbir şeyden korkulmamalı, yalnızca anlaşılmalıdır. Şimdi, daha az korkmak için daha çok anlama zamanıdır.&rdquo;</blockquote>
   <cite>Marie Curie</cite>
-  <p class="fin">Tarık Hurma &middot; Fin</p>
+  <p class="fin">Tarık Hurma &middot; <span data-i18n="footer_fin">Fin</span></p>
 </footer>
 
 <script>
@@ -812,19 +818,35 @@
   const bgAudio = document.getElementById('bgAudio');
   const musicToggle = document.getElementById('musicToggle');
   let isPlaying = false;
+
+  const musicTitles = {
+    tr: {
+      play: "The Pendulum's Grace — çalmak için tıkla",
+      pause: "The Pendulum's Grace — durdurmak için tıkla"
+    },
+    en: {
+      play: "The Pendulum's Grace — click to play",
+      pause: "The Pendulum's Grace — click to pause"
+    }
+  };
+
+  function updateMusicTitle(){
+    const t = musicTitles[currentLang];
+    musicToggle.title = isPlaying ? t.pause : t.play;
+  }
+
   musicToggle.addEventListener('click', () => {
     if(isPlaying){
       bgAudio.pause();
       musicToggle.textContent = '♪';
       musicToggle.classList.remove('is-playing');
-      musicToggle.title = "The Pendulum's Grace — çalmak için tıkla";
     } else {
       bgAudio.play().catch(() => {});
       musicToggle.textContent = '❚❚';
       musicToggle.classList.add('is-playing');
-      musicToggle.title = "The Pendulum's Grace — durdurmak için tıkla";
     }
     isPlaying = !isPlaying;
+    updateMusicTitle();
   });
 
   const themeToggle = document.getElementById('themeToggle');
@@ -838,6 +860,108 @@
       root.setAttribute('data-theme', 'dark');
       themeToggle.textContent = '☀';
     }
+  });
+
+  /* ---------- LANGUAGE SWITCHER ---------- */
+  const translations = {
+    en: {
+      page_title: "Tarık Hurma — Portfolio",
+      theme_aria: "Toggle night / day mode",
+      theme_title: "Night / day mode",
+      hero_position: "A software developer &amp; AI enthusiast designing intelligent applications and interactive systems.",
+      tag_individuality: "Individuality",
+      tag_education: "Education",
+      tag_freedom: "Freedom",
+      hero_lede: "True education lets a person discover their own individuality. And a person who discovers their individuality attains real freedom — and knows how to protect it.",
+      cta_cv: "Download Résumé (PDF)",
+      cta_github: "View on GitHub",
+      mission_text: "I see software and AI not merely as technical tools, but as an extension of storytelling, world-building, and understanding human behavior. Every project is as much a matter of curiosity and aesthetics as it is an engineering problem — which is why fiction matters as much as code, and philosophy as much as systems.",
+      tag_game_theory: "Game Theory",
+      quote_bacon: "&ldquo;Knowledge itself is power.&rdquo;",
+      bap1_title: "Fictional Worlds",
+      bap1_sub: "Every world exists with its own physics and economy.",
+      card_wynox_desc: "A 3D voxel game written in Python, pygame, and PyOpenGL. Features infinite map streaming and a custom VBO-based render engine.",
+      tag_voxel: "Voxel",
+      card_glb_desc: "A plant-market simulation built in Unity. Features AI-driven dynamic pricing and an NPC dialogue system running on a two-stage architecture.",
+      card_wictophia_desc: "A 2D strategy game with a Voronoi-based province map and a two-stage production economy.",
+      tag_strategy: "Strategy",
+      card_swalera_desc: "An ongoing project blending fictional world-building with game design.",
+      tag_game_design: "Game Design",
+      card_mioun_desc: "A game project where I honed my 2D multiplayer skills.",
+      quote_lovelace: "&ldquo;Imagination is the true gatekeeper of discovery.&rdquo;",
+      bap2_title: "Thinking Machines",
+      bap2_sub: "Small experiments on the edge of mechanical reasoning.",
+      card_ouirelle_desc: "A custom AI assistant platform running &ldquo;Lotus,&rdquo; a LoRA fine-tuned Qwen3-8B model. Features JWT and API-key authentication, live streaming via SSE, and Peach AI integration for image generation.",
+      card_peach_desc: "A Stable Diffusion-based image generation module, triggered by a <em>/draw</em> command embedded in the chat interface.",
+      tag_image_gen: "Image Generation",
+      quote_goethe: "&ldquo;Knowing is not enough, we must apply; willing is not enough, we must do.&rdquo;",
+      bap3_title: "Applications",
+      bap3_sub: "Atelier Numérique — ideas turned into products.",
+      card_pymelon_desc: "An IDE application built with Python and PyQt6.",
+      card_cattleya_desc: "A Python-based design application.",
+      tag_design: "Design",
+      card_fantastic_desc: "A social media project with a Python backend.",
+      tag_social_media: "Social Media",
+      quote_nietzsche: "&ldquo;One must still have chaos in oneself to give birth to a dancing star.&rdquo;",
+      bap4_title: "Theories &amp; Research",
+      bap4_sub: "The discipline beyond code — reading, questioning, understanding systems.",
+      card_theory1_desc: "Academic research, supported by charts, examining strategic decision-making through the lens of game theory.",
+      tag_research: "Research",
+      link_prompt_eng_title: "Prompt Engineering",
+      card_theory2_desc: "Work on systematic prompt design, fine-tuning datasets, and reasoning traces to steer the behavior of large language models.",
+      links_kicker: "Calling Card Cabinet",
+      links_title: "Where I Can Be Found",
+      links_sub: "The addresses where the work and traces are scattered.",
+      quote_curie: "&ldquo;Nothing in life is to be feared, it is only to be understood. Now is the time to understand more, so that we may fear less.&rdquo;",
+      footer_fin: "The End",
+      src_link: "Source Code &#8599;"
+    }
+  };
+
+  // Capture original (Turkish) content before any switching happens
+  const originalContent = {};
+  const originalAttrs = { title: {}, aria: {} };
+
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if(!(key in originalContent)) originalContent[key] = el.innerHTML;
+  });
+  document.querySelectorAll('[data-i18n-title]').forEach(el => {
+    const key = el.getAttribute('data-i18n-title');
+    originalAttrs.title[key] = el.getAttribute('title');
+  });
+  document.querySelectorAll('[data-i18n-aria]').forEach(el => {
+    const key = el.getAttribute('data-i18n-aria');
+    originalAttrs.aria[key] = el.getAttribute('aria-label');
+  });
+
+  let currentLang = 'tr';
+  const langToggle = document.getElementById('langToggle');
+
+  function setLanguage(lang){
+    currentLang = lang;
+    const dict = lang === 'en' ? translations.en : {};
+
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      el.innerHTML = lang === 'en' && dict[key] ? dict[key] : originalContent[key];
+    });
+    document.querySelectorAll('[data-i18n-title]').forEach(el => {
+      const key = el.getAttribute('data-i18n-title');
+      el.setAttribute('title', lang === 'en' && dict[key] ? dict[key] : originalAttrs.title[key]);
+    });
+    document.querySelectorAll('[data-i18n-aria]').forEach(el => {
+      const key = el.getAttribute('data-i18n-aria');
+      el.setAttribute('aria-label', lang === 'en' && dict[key] ? dict[key] : originalAttrs.aria[key]);
+    });
+
+    document.documentElement.lang = lang;
+    langToggle.textContent = lang === 'en' ? 'TR' : 'EN';
+    updateMusicTitle();
+  }
+
+  langToggle.addEventListener('click', () => {
+    setLanguage(currentLang === 'tr' ? 'en' : 'tr');
   });
 </script>
 
