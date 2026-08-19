@@ -6,139 +6,429 @@
 <title id="pageTitle" data-i18n="page_title">Tarık Hurma — Portföy</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Cinzel:wght@400;500;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
-    --lilac: #9B87D4;
-    --paper: #FBFAFF;
-    --steel: #7BA7D9;
-    --ink: #2A2140;
-    --ink-soft: #4A3F66;
-    --gilt: #B8935A;
-    --gilt-soft: #D9C08F;
-    --panel: #F1EDFA;
-    --line: rgba(42,33,64,0.16);
-    --footer-bg: #2A2140;
-    --footer-text: #FBFAFF;
+    --paper: #FFFBF4;
+    --ink: #26242C;
+    --ink-soft: #6E6B78;
+    --panel: #F5F4F8;
+    --line: rgba(38,36,44,0.12);
+    --footer-bg: #EDEBF1;
+    --footer-text: #26242C;
+
+    --red: #E4483C;
+    --blue: #3E8FE0;
+    --yellow: #F0B429;
+    --orange: #F2793A;
+    --pink: #E36FA0;
+
+    --accent: var(--pink);
     --max: 900px;
   }
 
   html[data-theme="dark"]{
-    --lilac: #B9A6F0;
-    --paper: #17121F;
-    --steel: #8FB6E6;
-    --ink: #F1EDFA;
-    --ink-soft: #C9BEE0;
-    --gilt: #D9B876;
-    --gilt-soft: #E8CB94;
-    --panel: #221B33;
-    --line: rgba(241,237,250,0.14);
+    --paper: #18171D;
+    --ink: #F1F0F5;
+    --ink-soft: #B4B1BE;
+    --panel: #232128;
+    --line: rgba(241,240,245,0.12);
+    --footer-bg: #131218;
+    --footer-text: #F1F0F5;
+
+    --red: #FF6B5E;
+    --blue: #6FB4FF;
+    --yellow: #FFD166;
+    --orange: #FF9B5E;
+    --pink: #F08FC0;
   }
 
+  .accent-red{ --accent: var(--red); }
+  .accent-blue{ --accent: var(--blue); }
+  .accent-yellow{ --accent: var(--yellow); }
+  .accent-orange{ --accent: var(--orange); }
+
   *{box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
+  html{ scroll-behavior:smooth; height:100%; }
+  html, body{ height:100%; }
 
   body{
     margin:0;
-    background:
-      radial-gradient(ellipse at top, rgba(155,135,212,0.08), transparent 60%),
-      radial-gradient(ellipse at bottom, rgba(123,167,217,0.07), transparent 55%),
-      var(--paper);
+    overflow:hidden;
+    background:var(--paper);
     color:var(--ink);
-    font-family:'EB Garamond', serif;
+    font-family:'Sora', sans-serif;
     font-size:19px;
     line-height:1.7;
     -webkit-font-smoothing:antialiased;
     transition:background-color 0.4s ease, color 0.4s ease;
   }
 
-  ::selection{ background:var(--lilac); color:var(--paper); }
+  ::selection{ background:var(--accent); color:var(--paper); }
 
   a{ color:var(--ink); }
 
-  .frame-corner{
+  /* ---------- AMBIENT LAYER: lava-lamp blobs, section glow, asphalt grain, drifting petals ---------- */
+  .blobs{
     position:fixed;
-    width:120px; height:120px;
+    inset:0;
+    z-index:0;
     pointer-events:none;
-    z-index:5;
-    opacity:0.55;
+    overflow:hidden;
+    filter:blur(60px);
   }
-  .fc-tl{ top:0; left:0; }
-  .fc-tr{ top:0; right:0; transform:scaleX(-1); }
-  .fc-bl{ bottom:0; left:0; transform:scaleY(-1); }
-  .fc-br{ bottom:0; right:0; transform:scale(-1,-1); }
-  @media (max-width: 720px){ .frame-corner{ display:none; } }
+  .blob{
+    position:absolute;
+    width:44vw; height:44vw;
+    max-width:520px; max-height:520px;
+    border-radius:50%;
+    opacity:0.16;
+    animation:blob-drift ease-in-out infinite alternate;
+  }
+  html[data-theme="dark"] .blob{ opacity:0.22; }
+  .blob.b1{ top:-10%; left:-8%; background:var(--red); animation-duration:55s; }
+  .blob.b2{ top:55%; right:-12%; background:var(--blue); animation-duration:64s; animation-delay:-12s; }
+  .blob.b3{ bottom:-18%; left:18%; background:var(--yellow); animation-duration:48s; animation-delay:-30s; }
+  .blob.b4{ top:15%; right:28%; background:var(--pink); animation-duration:70s; animation-delay:-8s; }
+  @keyframes blob-drift{
+    0%{ transform:translate(0, 0) scale(1); }
+    33%{ transform:translate(6vw, -4vw) scale(1.15); }
+    66%{ transform:translate(-4vw, 5vw) scale(0.9); }
+    100%{ transform:translate(3vw, 3vw) scale(1.05); }
+  }
 
+  .section-glow{
+    position:fixed;
+    inset:0;
+    z-index:0;
+    pointer-events:none;
+    opacity:0.5;
+    mix-blend-mode:soft-light;
+    transition:background-color 1.2s ease;
+  }
+  html[data-theme="dark"] .section-glow{ opacity:0.6; mix-blend-mode:overlay; }
+
+  .grain{
+    position:fixed;
+    inset:0;
+    z-index:0;
+    pointer-events:none;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity:0.045;
+    mix-blend-mode:multiply;
+    will-change:transform;
+  }
+  html[data-theme="dark"] .grain{ opacity:0.09; mix-blend-mode:overlay; }
+
+  .petals{
+    position:fixed;
+    inset:0;
+    z-index:0;
+    pointer-events:none;
+    overflow:hidden;
+    will-change:transform;
+  }
+  .petal{
+    position:absolute;
+    top:-10vh;
+    width:13px;
+    height:17px;
+    border-radius:70% 30% 65% 35% / 60% 40% 70% 30%;
+    background:linear-gradient(135deg, var(--petal-color, var(--pink)), color-mix(in srgb, var(--petal-color, var(--pink)) 45%, white));
+    --petal-o:0.32;
+    animation:petal-drift linear infinite;
+  }
+  body.music-playing .petal{ --petal-o:0.62; }
+
+  @keyframes petal-drift{
+    0%{ transform:translate(0, 0) rotate(0deg); opacity:0; }
+    8%{ opacity:var(--petal-o); }
+    92%{ opacity:var(--petal-o); }
+    100%{ transform:translate(50px, 120vh) rotate(320deg); opacity:0; }
+  }
+
+  /* ---------- CANDLELIGHT CURSOR GLOW ---------- */
+  .candle-glow{
+    position:fixed;
+    top:0; left:0;
+    width:420px; height:420px;
+    margin:-210px 0 0 -210px;
+    border-radius:50%;
+    background:radial-gradient(circle, rgba(242,180,90,0.16), rgba(242,180,90,0.05) 45%, transparent 70%);
+    z-index:2;
+    pointer-events:none;
+    opacity:0;
+    transition:opacity 0.4s ease;
+    will-change:transform;
+    mix-blend-mode:multiply;
+  }
+  html[data-theme="dark"] .candle-glow{
+    background:radial-gradient(circle, rgba(255,196,120,0.22), rgba(255,196,120,0.06) 45%, transparent 70%);
+    mix-blend-mode:screen;
+  }
+  .candle-glow.is-active{ opacity:1; }
+  @media (hover:none){ .candle-glow{ display:none; } }
+
+  /* ---------- HORIZONTAL FILMSTRIP ---------- */
+  .hscroll{
+    position:relative;
+    z-index:1;
+    display:flex;
+    height:100vh; height:100dvh;
+    width:100vw;
+    overflow-x:auto;
+    overflow-y:hidden;
+    scroll-snap-type:x mandatory;
+    scroll-behavior:smooth;
+    scrollbar-width:thin;
+    scrollbar-color:var(--ink-soft) transparent;
+    overscroll-behavior-x:contain;
+    -webkit-overflow-scrolling:touch;
+  }
+  .hscroll::-webkit-scrollbar{ height:6px; }
+  .hscroll::-webkit-scrollbar-track{ background:transparent; }
+  .hscroll::-webkit-scrollbar-thumb{ background:var(--ink-soft); border-radius:10px; }
+
+  .panel{
+    flex:0 0 100vw;
+    width:100vw;
+    height:100vh; height:100dvh;
+    scroll-snap-align:start;
+    scroll-snap-stop:always;
+    overflow-y:auto;
+    overflow-x:hidden;
+    scrollbar-width:none;
+    overscroll-behavior-y:contain;
+    -webkit-overflow-scrolling:touch;
+  }
+  .panel::-webkit-scrollbar{ display:none; }
+
+  /* ---------- SECTION TRANSITION EFFECT ---------- */
+  @supports (animation-timeline: view()){
+    @keyframes panel-reveal{
+      0%{ opacity:0.25; transform:scale(0.95); filter:saturate(0.55) blur(1.5px); }
+      18%{ opacity:1; transform:scale(1); filter:saturate(1) blur(0); }
+      82%{ opacity:1; transform:scale(1); filter:saturate(1) blur(0); }
+      100%{ opacity:0.25; transform:scale(0.95); filter:saturate(0.55) blur(1.5px); }
+    }
+    .panel{
+      animation:panel-reveal linear both;
+      animation-timeline:view(inline);
+      animation-range:cover 0% cover 100%;
+    }
+  }
+
+  /* ---------- CHROME: TOGGLES / NAV DOTS / ARROWS ---------- */
   .theme-toggle{
     position:fixed;
     top:26px; right:26px;
     z-index:20;
     width:46px; height:46px;
     border-radius:50%;
-    border:1.5px solid var(--gilt);
+    border:1.5px solid var(--accent);
     background:var(--panel);
-    color:var(--gilt);
+    color:var(--accent);
     font-size:18px;
     display:flex; align-items:center; justify-content:center;
     cursor:pointer;
-    transition:transform 0.3s ease, background-color 0.4s ease, border-color 0.4s ease;
+    transition:transform 0.3s ease, background-color 0.4s ease, border-color 0.4s ease, color 0.4s ease;
   }
   .theme-toggle:hover{ transform:rotate(18deg) scale(1.06); }
-  .theme-toggle:focus-visible{ outline:2px solid var(--lilac); outline-offset:3px; }
+  .theme-toggle:active{ transform:scale(0.9); }
+  .theme-toggle:focus-visible{ outline:2px solid var(--accent); outline-offset:3px; }
   .music-toggle{ right:84px; font-size:16px; }
-  .music-toggle.is-playing{ color:var(--lilac); border-color:var(--lilac); }
-  .lang-toggle{ right:142px; font-size:13px; font-family:'Cinzel', serif; letter-spacing:0.05em; width:46px; }
+  .music-toggle.is-playing{ color:var(--pink); border-color:var(--pink); animation:music-pulse 1.8s ease-in-out infinite; }
+  @keyframes music-pulse{
+    0%, 100%{ box-shadow:0 0 0 0 color-mix(in srgb, var(--pink) 45%, transparent); }
+    50%{ box-shadow:0 0 0 10px color-mix(in srgb, var(--pink) 0%, transparent); }
+  }
+  .lang-toggle{ right:142px; font-size:13px; font-family:'Sora', sans-serif; letter-spacing:0.05em; width:46px; }
+
+  .nav-arrow{
+    position:fixed;
+    top:50%;
+    transform:translateY(-50%);
+    z-index:20;
+    width:46px; height:46px;
+    border-radius:50%;
+    border:1.5px solid var(--accent);
+    background:var(--panel);
+    color:var(--accent);
+    font-size:20px;
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer;
+    transition:transform 0.3s ease, background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+  }
+  .nav-arrow:hover{ background:var(--accent); color:var(--paper); transform:translateY(-50%) scale(1.06); }
+  .nav-arrow:active{ transform:translateY(-50%) scale(0.9); }
+  .nav-prev{ left:20px; }
+  .nav-next{ right:20px; }
+  @media (hover:none){ .nav-arrow{ display:none; } }
+
+  .dot-nav{
+    position:fixed;
+    left:50%; bottom:24px;
+    transform:translateX(-50%);
+    z-index:20;
+    display:flex;
+    align-items:center;
+    gap:11px;
+    padding:11px 18px;
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:30px;
+    box-shadow:0 8px 24px rgba(20,16,26,0.14);
+  }
+  .dot{
+    position:relative;
+    width:9px; height:9px;
+    border-radius:50%;
+    border:none;
+    padding:0;
+    background:var(--line);
+    cursor:pointer;
+    transition:background-color 0.3s ease, transform 0.3s ease;
+  }
+  .dot::after{
+    content:"";
+    position:absolute;
+    inset:-4px;
+  }
+  .dot:hover{ background:var(--accent); }
+  .dot.active{ background:var(--accent); transform:scale(1.4); }
+  .dot::before{
+    content:attr(data-emoji);
+    position:absolute;
+    bottom:22px;
+    left:50%;
+    transform:translateX(-50%) scale(0.5);
+    font-size:15px;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity 0.2s ease, transform 0.2s ease;
+    white-space:nowrap;
+  }
+  .dot:hover::before, .dot:focus-visible::before, .dot.active::before{
+    opacity:1;
+    transform:translateX(-50%) scale(1);
+  }
+
+  @media (max-width: 720px){
+    .nav-arrow{ width:38px; height:38px; font-size:16px; }
+    .nav-prev{ left:10px; }
+    .nav-next{ right:10px; }
+  }
 
   @media (max-width: 560px){
     .theme-toggle{ top:14px; right:14px; width:40px; height:40px; font-size:15px; }
     .music-toggle{ right:62px; }
     .lang-toggle{ right:110px; width:40px; height:40px; font-size:12px; }
+    .dot-nav{ gap:8px; padding:9px 14px; bottom:14px; }
+    .dot{ width:7px; height:7px; }
   }
 
-  .wrap{ max-width:var(--max); margin:0 auto; padding:0 32px; }
+  .wrap{ max-width:var(--max); margin:0 auto; width:100%; }
 
   /* ---------- HERO ---------- */
-  header.hero{
-    padding:110px 32px 70px;
+  .hero{
+    min-height:100%;
+    display:flex;
+    flex-direction:column;
+    justify-content:safe center;
+    padding:90px 32px;
     text-align:center;
     position:relative;
   }
   .eyebrow{
-    font-family:'Cinzel', serif;
+    font-family:'Sora', sans-serif;
     letter-spacing:0.32em;
     font-size:12px;
-    color:var(--gilt);
+    color:var(--accent);
     text-transform:uppercase;
     margin:0 0 22px;
   }
+  .greeting{
+    font-family:'Sora', sans-serif;
+    font-size:14px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    margin:0 0 16px;
+  }
+  .avatar{
+    width:clamp(140px, 20vw, 200px);
+    height:clamp(140px, 20vw, 200px);
+    border-radius:50%;
+    object-fit:cover;
+    margin:0 auto 26px;
+    display:block;
+    border:4px solid var(--paper);
+    box-shadow:0 0 0 3px var(--accent), 0 12px 32px rgba(20,16,26,0.18);
+  }
+  .desk-doodle{
+    position:absolute;
+    width:56px; height:56px;
+    color:var(--accent);
+    opacity:0.5;
+  }
+  .dd-cup{ top:16%; left:6%; }
+  .dd-plant{ top:14%; right:6%; }
+  .dd-lamp{ bottom:12%; left:8%; }
+  @media (max-width: 900px){ .desk-doodle{ display:none; } }
+
+  .section-doodle{
+    position:absolute;
+    top:10%;
+    width:52px; height:52px;
+    color:var(--accent);
+    opacity:0.4;
+  }
+  .section-doodle.sd-right{ right:6%; }
+  .section-doodle.sd-left{ left:6%; }
+  @media (max-width: 900px){ .section-doodle{ display:none; } }
   .rule{
     width:64px; height:1px;
-    background:linear-gradient(90deg, transparent, var(--gilt), transparent);
+    background:linear-gradient(90deg, transparent, var(--accent), transparent);
     margin:22px auto;
   }
   .rule.wide{ width:140px; }
   h1.name{
-    font-family:'Cormorant Garamond', serif;
-    font-style:italic;
-    font-weight:600;
+    position:relative;
+    font-family:'Sora', sans-serif;
+    font-weight:700;
     font-size:clamp(42px, 8vw, 78px);
     margin:0;
     letter-spacing:0.01em;
     color:var(--ink);
   }
+  h1.name::before{
+    content:"";
+    position:absolute;
+    top:50%; left:50%;
+    width:70%; height:140%;
+    transform:translate(-50%, -50%);
+    background:radial-gradient(circle, color-mix(in srgb, var(--yellow) 55%, var(--pink)) 0%, transparent 70%);
+    filter:blur(38px);
+    opacity:0.28;
+    z-index:-1;
+    animation:bokeh-drift 7s ease-in-out infinite;
+  }
+  @keyframes bokeh-drift{
+    0%, 100%{ opacity:0.22; transform:translate(-50%, -50%) scale(1); }
+    50%{ opacity:0.36; transform:translate(-50%, -50%) scale(1.08); }
+  }
   .tagline{
-    font-family:'Cinzel', serif;
+    font-family:'Sora', sans-serif;
     font-size:13px;
     letter-spacing:0.2em;
     color:var(--ink-soft);
     text-transform:uppercase;
     margin-top:18px;
   }
-  .tagline span{ color:var(--lilac); margin:0 10px; }
+  .tagline span{ color:var(--accent); margin:0 10px; }
   .lede{
     max-width:560px;
     margin:34px auto 0;
-    font-style:italic;
     font-size:20px;
     color:var(--ink-soft);
   }
@@ -146,63 +436,56 @@
   .position-statement{
     max-width:620px;
     margin:26px auto 0;
-    font-family:'Cormorant Garamond', serif;
-    font-weight:600;
-    font-style:italic;
+    font-family:'Sora', sans-serif;
+    font-weight:500;
     font-size:clamp(20px, 2.6vw, 25px);
     line-height:1.45;
     color:var(--ink);
   }
 
-  /* ---------- QUOTE DIVIDERS ---------- */
-  .quote-divider{
-    max-width:640px;
-    margin:0 auto;
-    padding:70px 32px;
-    text-align:center;
-  }
-  .fleuron{ width:52px; height:auto; margin:0 auto 26px; display:block; color:var(--lilac); opacity:0.8; }
-  .quote-divider blockquote{
-    margin:0;
-    font-family:'Cormorant Garamond', serif;
-    font-style:italic;
-    font-size:clamp(22px, 3.4vw, 30px);
-    color:var(--ink);
-    line-height:1.5;
-  }
-  .quote-divider cite{
-    display:block;
-    margin-top:18px;
-    font-family:'Cinzel', serif;
-    font-style:normal;
-    font-size:12px;
-    letter-spacing:0.18em;
-    text-transform:uppercase;
-    color:var(--gilt);
-  }
+  .fleuron{ width:52px; height:auto; margin:0 auto 26px; display:block; color:var(--accent); opacity:0.8; }
 
   /* ---------- BAP (CHAPTER) SECTIONS ---------- */
-  section.bap{
-    padding:60px 32px 40px;
+  .bap{
+    position:relative;
+    min-height:100%;
+    display:flex;
+    flex-direction:column;
+    justify-content:safe center;
+    padding:90px 32px 60px;
   }
+  #gracie{ background:#E6F1FC; }
+  html[data-theme="dark"] #gracie{ background:#141C26; }
   .bap-head{ text-align:center; margin-bottom:56px; }
   .bap-num{
-    font-family:'Cinzel', serif;
+    font-family:'Sora', sans-serif;
     font-size:12px;
     letter-spacing:0.3em;
     text-transform:uppercase;
-    color:var(--gilt);
+    color:var(--accent);
     margin-bottom:14px;
   }
   h2.bap-title{
-    font-family:'Cormorant Garamond', serif;
+    font-family:'Sora', sans-serif;
     font-weight:600;
     font-size:clamp(30px, 5vw, 46px);
     margin:0 0 12px;
     color:var(--ink);
   }
+  h2.bap-title::before{
+    content:"✦";
+    display:inline-block;
+    margin-right:10px;
+    color:var(--accent);
+    font-size:0.55em;
+    vertical-align:middle;
+    animation:sparkle-pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes sparkle-pulse{
+    0%, 100%{ transform:scale(1) rotate(0deg); opacity:0.8; }
+    50%{ transform:scale(1.3) rotate(18deg); opacity:1; }
+  }
   .bap-sub{
-    font-style:italic;
     color:var(--ink-soft);
     font-size:16px;
     max-width:560px;
@@ -221,20 +504,55 @@
 
   .card{
     position:relative;
-    background:var(--panel);
+    background:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='90' height='90'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75 0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E"),
+      var(--panel);
+    background-blend-mode:soft-light;
     padding:0 0 28px;
     border:1px solid var(--line);
+    border-radius:20px;
+    box-shadow:0 6px 22px rgba(20,16,26,0.08);
     opacity:0;
     transform:translateY(18px);
-    transition:opacity 0.7s ease, transform 0.7s ease, background-color 0.4s ease, border-color 0.4s ease;
-    overflow:hidden;
+    transition:opacity 0.7s ease, transform 0.7s ease, background-color 0.4s ease, border-color 0.4s ease, box-shadow 0.3s ease;
+    overflow:visible;
+    cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='26'%3E%3Cg fill='%23E36FA0'%3E%3Ccircle cx='13' cy='6' r='5'/%3E%3Ccircle cx='20' cy='13' r='5'/%3E%3Ccircle cx='13' cy='20' r='5'/%3E%3Ccircle cx='6' cy='13' r='5'/%3E%3C/g%3E%3Ccircle cx='13' cy='13' r='4' fill='%23F0B429'/%3E%3C/svg%3E") 13 13, pointer;
   }
   .card.in-view{ opacity:1; transform:translateY(0); }
+  .card::before{
+    content:"";
+    position:absolute;
+    top:-9px; left:28px;
+    width:54px; height:18px;
+    background:color-mix(in srgb, var(--accent) 55%, white);
+    opacity:0.85;
+    transform:rotate(-4deg);
+    border-radius:2px;
+    box-shadow:0 2px 4px rgba(20,16,26,0.12);
+    pointer-events:none;
+  }
+  .card:hover{ box-shadow:0 10px 28px rgba(20,16,26,0.14); border-color:var(--accent); }
+  .card::after{
+    content:"";
+    position:absolute;
+    right:0; bottom:0;
+    width:0; height:0;
+    border-style:solid;
+    border-width:0 0 20px 20px;
+    border-color:transparent transparent color-mix(in srgb, var(--accent) 30%, var(--paper)) transparent;
+    border-radius:0 0 20px 0;
+    opacity:0;
+    transition:opacity 0.25s ease, border-width 0.25s ease;
+    pointer-events:none;
+    filter:drop-shadow(-2px -2px 3px rgba(20,16,26,0.15));
+  }
+  .card:hover::after{ opacity:1; border-width:0 0 30px 30px; }
 
   .card-thumb{
     width:100%;
     aspect-ratio:16/9;
     overflow:hidden;
+    border-radius:20px 20px 0 0;
     border-bottom:1px solid var(--line);
     background:var(--paper);
   }
@@ -248,21 +566,8 @@
 
   .card-body{ padding:26px 30px 0; }
 
-  .card::before, .card::after,
-  .card .cbl, .card .cbr{
-    content:"";
-    position:absolute;
-    width:16px; height:16px;
-    border-color:var(--gilt);
-    border-style:solid;
-  }
-  .card::before{ top:-1px; left:-1px; border-width:2px 0 0 2px; }
-  .card::after{ top:-1px; right:-1px; border-width:2px 2px 0 0; }
-  .card .cbl{ bottom:-1px; left:-1px; border-width:0 0 2px 2px; }
-  .card .cbr{ bottom:-1px; right:-1px; border-width:0 2px 2px 0; }
-
   .card h3{
-    font-family:'Cormorant Garamond', serif;
+    font-family:'Sora', sans-serif;
     font-weight:600;
     font-size:24px;
     margin:0 0 12px;
@@ -271,11 +576,11 @@
   .card h3 a{
     color:var(--ink);
     text-decoration:none;
-    border-bottom:1px solid var(--gilt);
+    border-bottom:1px solid var(--accent);
     padding-bottom:1px;
     transition:color 0.25s ease;
   }
-  .card h3 a:hover{ color:var(--lilac); }
+  .card h3 a:hover{ color:var(--accent); }
   .card p{
     margin:0 0 16px;
     font-size:16.5px;
@@ -283,29 +588,36 @@
   }
   .tags{ display:flex; flex-wrap:wrap; gap:8px; }
   .tag{
-    font-family:'Cinzel', serif;
+    font-family:'Sora', sans-serif;
     font-size:10.5px;
     letter-spacing:0.08em;
     text-transform:uppercase;
     color:var(--ink);
-    border:1px solid var(--lilac);
-    padding:5px 10px;
-    background:rgba(155,135,212,0.08);
+    border:1px solid var(--accent);
+    border-radius:20px;
+    padding:5px 12px;
+    background:color-mix(in srgb, var(--accent) 10%, transparent);
+    transform:rotate(var(--tag-rot, 0deg));
+    transition:transform 0.2s ease, background-color 0.2s ease;
   }
+  .tag:nth-child(3n+1){ --tag-rot: -3deg; }
+  .tag:nth-child(3n+2){ --tag-rot: 2deg; }
+  .tag:nth-child(3n){ --tag-rot: -1.5deg; }
+  .tag:hover{ transform:rotate(0deg) scale(1.06); }
 
   .src-link{
     display:inline-block;
     margin-top:14px;
-    font-family:'Cinzel', serif;
+    font-family:'Sora', sans-serif;
     font-size:10.5px;
     letter-spacing:0.1em;
     text-transform:uppercase;
-    color:var(--gilt);
+    color:var(--accent);
     text-decoration:none;
     border-bottom:1px solid transparent;
-    transition:color 0.25s ease, border-color 0.25s ease;
+    transition:color 0.25s ease, border-color 0.25s ease, opacity 0.25s ease;
   }
-  .src-link:hover{ color:var(--lilac); border-color:var(--lilac); }
+  .src-link:hover{ opacity:0.72; border-color:var(--accent); }
 
   /* ---------- HERO CTA ---------- */
   .hero-cta{
@@ -316,35 +628,35 @@
     margin-top:36px;
   }
   .cta-btn{
-    font-family:'Cinzel', serif;
+    font-family:'Sora', sans-serif;
     font-size:11.5px;
     letter-spacing:0.14em;
     text-transform:uppercase;
     text-decoration:none;
-    padding:13px 26px;
-    border:1px solid var(--gilt);
+    padding:13px 28px;
+    border:1px solid var(--accent);
+    border-radius:30px;
     color:var(--ink);
     background:var(--panel);
-    transition:background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+    transition:background-color 0.3s ease, color 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
   }
   .cta-btn:hover{ transform:translateY(-2px); }
+  .cta-btn:active{ transform:translateY(0) scale(0.94); }
   .cta-btn.primary{
-    background:var(--lilac);
+    background:var(--accent);
     color:var(--paper);
-    border-color:var(--lilac);
+    border-color:var(--accent);
   }
-  .cta-btn.primary:hover{ background:var(--steel); border-color:var(--steel); }
+  .cta-btn.primary:hover{ background:var(--red); border-color:var(--red); }
 
-  /* ---------- MISYON ---------- */
+  /* ---------- MISYON (inline within hero) ---------- */
   .mission{
-    max-width:680px;
-    margin:0 auto;
-    padding:20px 32px 70px;
+    max-width:600px;
+    margin:36px auto 0;
     text-align:center;
   }
   .mission p{
-    font-style:italic;
-    font-size:19px;
+    font-size:17.5px;
     color:var(--ink-soft);
     margin:0;
   }
@@ -356,45 +668,72 @@
     margin-top:30px;
   }
 
-  /* ---------- TIMELINE ---------- */
-  section.timeline-section{ padding:20px 32px 60px; }
-  .timeline-list{
+  /* ---------- HAKKIMDA / YOLCULUK ---------- */
+  .about{
     max-width:640px;
-    margin:44px auto 0;
-    border-left:1px solid var(--line);
-    padding-left:28px;
+    margin:0 auto 50px;
+    text-align:center;
   }
-  .tl-row{ position:relative; margin-bottom:30px; }
+  .about p{
+    font-size:18px;
+    color:var(--ink-soft);
+    margin:0;
+  }
+  .timeline-list{
+    max-width:620px;
+    margin:0 auto;
+    display:flex;
+    flex-direction:column;
+    gap:26px;
+  }
+  .tl-row{
+    position:relative;
+    padding-left:30px;
+    text-align:left;
+    border-left:2px solid var(--line);
+  }
   .tl-row::before{
     content:"";
     position:absolute;
-    left:-33px; top:5px;
-    width:9px; height:9px;
+    left:-7px; top:4px;
+    width:12px; height:12px;
     border-radius:50%;
-    background:var(--gilt);
+    background:var(--accent);
+    box-shadow:0 0 0 4px var(--panel);
   }
-  .tl-row .tl-period{
-    font-family:'Cinzel', serif;
-    font-size:11px;
-    letter-spacing:0.16em;
-    text-transform:uppercase;
-    color:var(--gilt);
+  .tl-period{
     display:block;
-    margin-bottom:6px;
+    font-family:'Sora', sans-serif;
+    font-size:11px;
+    letter-spacing:0.2em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-bottom:4px;
   }
-  .tl-row h4{
-    font-family:'Cormorant Garamond', serif;
+  .tl-row h3{
+    font-family:'Sora', sans-serif;
     font-weight:600;
-    font-size:21px;
-    margin:0 0 6px;
+    font-size:19px;
+    margin:0 0 4px;
     color:var(--ink);
   }
-  .tl-row p{ margin:0; color:var(--ink-soft); font-size:15.5px; }
+  .tl-row p{
+    margin:0;
+    font-size:15px;
+    color:var(--ink-soft);
+  }
+
+  /* ---------- BLOG ÖNE ÇIKANLAR ---------- */
+  .blog-panel .cards{ max-width:900px; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); }
 
   /* ---------- BAĞLANTILAR / KARTVİZİT KABİNESİ ---------- */
-  section.links{
-    padding:70px 32px 90px;
-    background:linear-gradient(180deg, transparent, rgba(123,167,217,0.06) 20%, rgba(123,167,217,0.06) 80%, transparent);
+  .links{
+    min-height:100%;
+    display:flex;
+    flex-direction:column;
+    justify-content:safe center;
+    padding:90px 32px;
+    background:linear-gradient(180deg, transparent, color-mix(in srgb, var(--ink) 4%, transparent) 20%, color-mix(in srgb, var(--ink) 4%, transparent) 80%, transparent);
   }
   .card-index{
     display:grid;
@@ -408,131 +747,193 @@
     gap:16px;
     background:var(--paper);
     border:1px solid var(--line);
+    border-radius:16px;
     padding:18px 20px;
     text-decoration:none;
     transition:border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease, background-color 0.4s ease;
     opacity:0;
     transform:translateY(14px);
+    cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='26'%3E%3Cg fill='%23E36FA0'%3E%3Ccircle cx='13' cy='6' r='5'/%3E%3Ccircle cx='20' cy='13' r='5'/%3E%3Ccircle cx='13' cy='20' r='5'/%3E%3Ccircle cx='6' cy='13' r='5'/%3E%3C/g%3E%3Ccircle cx='13' cy='13' r='4' fill='%23F0B429'/%3E%3C/svg%3E") 13 13, pointer;
   }
   .calling-card.in-view{ opacity:1; transform:translateY(0); }
   .calling-card:hover{
-    border-color:var(--lilac);
+    border-color:var(--seal-color, var(--accent));
     transform:translateY(-3px);
-    box-shadow:0 10px 24px rgba(155,135,212,0.18);
+    box-shadow:0 10px 24px rgba(20,16,26,0.14);
   }
+  .calling-card:active{ transform:translateY(-1px) scale(0.97); }
   .seal{
     flex:0 0 auto;
     width:46px; height:46px;
     border-radius:50%;
-    border:1.5px solid var(--gilt);
+    border:1.5px solid var(--seal-color, var(--accent));
     display:flex; align-items:center; justify-content:center;
-    font-family:'Cinzel', serif;
+    font-family:'Sora', sans-serif;
     font-size:16px;
-    color:var(--gilt);
-    background:radial-gradient(circle at 35% 30%, rgba(184,147,90,0.12), transparent 70%);
+    color:var(--seal-color, var(--accent));
+    background:radial-gradient(circle at 35% 30%, color-mix(in srgb, var(--seal-color, var(--accent)) 18%, transparent), transparent 70%);
   }
   .cc-text{ display:flex; flex-direction:column; }
   .cc-platform{
-    font-family:'Cinzel', serif;
+    font-family:'Sora', sans-serif;
     font-size:11px;
     letter-spacing:0.14em;
     text-transform:uppercase;
     color:var(--ink-soft);
   }
   .cc-handle{
-    font-family:'Cormorant Garamond', serif;
+    font-family:'Sora', sans-serif;
     font-weight:600;
-    font-style:italic;
     font-size:19px;
     color:var(--ink);
   }
 
   /* ---------- FOOTER ---------- */
   footer{
+    min-height:100%;
+    display:flex;
+    flex-direction:column;
+    justify-content:safe center;
     text-align:center;
-    padding:80px 32px 70px;
+    padding:80px 32px;
     background:var(--footer-bg);
     color:var(--footer-text);
   }
-  footer .fleuron{ color:var(--gilt-soft); }
-  footer blockquote{
-    margin:0 auto;
-    max-width:620px;
-    font-family:'Cormorant Garamond', serif;
-    font-style:italic;
-    font-size:clamp(22px, 3.6vw, 30px);
-    line-height:1.55;
-  }
-  footer cite{
-    display:block;
-    margin-top:20px;
-    font-family:'Cinzel', serif;
-    font-style:normal;
-    font-size:12px;
-    letter-spacing:0.2em;
-    text-transform:uppercase;
-    color:var(--gilt-soft);
-  }
+  footer .fleuron{ color:var(--accent); }
   footer .fin{
-    margin-top:50px;
-    font-family:'Cinzel', serif;
+    margin-top:14px;
+    font-family:'Sora', sans-serif;
     font-size:11px;
     letter-spacing:0.3em;
-    color:rgba(251,250,255,0.4);
+    color:var(--ink-soft);
     text-transform:uppercase;
   }
 
+  /* ---------- CONFETTI (fin celebration) ---------- */
+  .confetti-burst{ position:fixed; inset:0; z-index:25; pointer-events:none; overflow:hidden; }
+  .confetti-piece{
+    position:absolute;
+    width:8px; height:12px;
+    border-radius:2px;
+    opacity:0;
+    animation:confetti-fly 1.1s ease-out forwards;
+  }
+  @keyframes confetti-fly{
+    0%{ transform:translate(-50%, -50%) rotate(0deg) scale(0.6); opacity:1; }
+    70%{ opacity:1; }
+    100%{ transform:translate(calc(-50% + var(--dx)), calc(-50% + var(--dy) + 160px)) rotate(var(--rot)) scale(1); opacity:0; }
+  }
+
+  /* ---------- WELCOME CURTAIN ---------- */
+  .curtain{
+    position:fixed;
+    inset:0;
+    z-index:100;
+    display:flex;
+    pointer-events:none;
+  }
+  .curtain-half{
+    flex:1;
+    background:var(--paper);
+  }
+  .curtain.opening .curtain-half.left{ animation:curtain-left 0.9s cubic-bezier(.7,0,.3,1) forwards; }
+  .curtain.opening .curtain-half.right{ animation:curtain-right 0.9s cubic-bezier(.7,0,.3,1) forwards; }
+  @keyframes curtain-left{ to{ transform:translateX(-100%); } }
+  @keyframes curtain-right{ to{ transform:translateX(100%); } }
+
   @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto !important; }
     *{ transition:none !important; animation:none !important; }
     .card, .calling-card{ opacity:1 !important; transform:none !important; }
+    .hscroll, .panel{ scroll-behavior:auto !important; }
+    .petals{ display:none; }
+    .curtain{ display:none; }
   }
 
   @media (max-width: 560px){
     body{ font-size:17px; }
-    header.hero{ padding:80px 24px 50px; }
-    section.bap{ padding:44px 24px 24px; }
-    .card{ padding:28px 22px 24px; }
+    .hero{ padding:60px 20px; }
+    .bap{ padding:60px 20px 40px; }
+    .mission{ margin-top:26px; }
+    .links{ padding:60px 20px; }
+    footer{ padding:60px 20px; }
+    .card-body{ padding:22px 20px 0; }
+    .avatar{ margin-bottom:20px; }
+    .tl-row{ padding-left:24px; }
+    .cards{ gap:22px; }
+    .card-index{ grid-template-columns:1fr; }
   }
 </style>
 </head>
 <body>
 
-<audio id="bgAudio" src="pendulums-grace.mp3" loop preload="none"></audio>
-<button class="theme-toggle music-toggle" id="musicToggle" type="button" aria-label="Müziği çal veya durdur" title="The Pendulum's Grace — çalmak için tıkla" data-playing="false">♪</button>
+<div class="curtain" id="curtain" aria-hidden="true">
+  <span class="curtain-half left"></span>
+  <span class="curtain-half right"></span>
+</div>
+
+<audio id="bgAudio" src="Flor_en_el_asfalto.mp3" loop preload="none"></audio>
+<button class="theme-toggle music-toggle" id="musicToggle" type="button" aria-label="Müziği çal veya durdur" title="Flor en el Asfalto — çalmak için tıkla" data-playing="false">♪</button>
 <button class="theme-toggle" id="themeToggle" type="button" data-i18n-aria="theme_aria" aria-label="Gece / gündüz modunu değiştir" data-i18n-title="theme_title" title="Gece / gündüz modu">☾</button>
 <button class="theme-toggle lang-toggle" id="langToggle" type="button" aria-label="Dili değiştir / Change language" title="Dili değiştir / Change language">EN</button>
 
-<svg class="frame-corner fc-tl" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M4 4 C 40 4, 4 40, 4 4" stroke="#9B87D4" stroke-width="1"/>
-  <path d="M4 4 L 60 4 M4 4 L 4 60" stroke="#B8935A" stroke-width="1"/>
-  <path d="M4 4 C 30 10, 10 30, 4 4" stroke="#9B87D4" stroke-width="1"/>
-  <circle cx="4" cy="4" r="3" fill="#B8935A"/>
-  <path d="M20 4 C 20 20, 4 20, 4 4" stroke="#7BA7D9" stroke-width="1"/>
-  <path d="M40 4 C 40 34, 4 34, 4 4" stroke="#9B87D4" stroke-width="0.8"/>
-</svg>
-<svg class="frame-corner fc-tr" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M4 4 C 40 4, 4 40, 4 4" stroke="#9B87D4" stroke-width="1"/>
-  <path d="M4 4 L 60 4 M4 4 L 4 60" stroke="#B8935A" stroke-width="1"/>
-  <circle cx="4" cy="4" r="3" fill="#B8935A"/>
-  <path d="M20 4 C 20 20, 4 20, 4 4" stroke="#7BA7D9" stroke-width="1"/>
-  <path d="M40 4 C 40 34, 4 34, 4 4" stroke="#9B87D4" stroke-width="0.8"/>
-</svg>
-<svg class="frame-corner fc-bl" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M4 4 C 40 4, 4 40, 4 4" stroke="#9B87D4" stroke-width="1"/>
-  <path d="M4 4 L 60 4 M4 4 L 4 60" stroke="#B8935A" stroke-width="1"/>
-  <circle cx="4" cy="4" r="3" fill="#B8935A"/>
-  <path d="M20 4 C 20 20, 4 20, 4 4" stroke="#7BA7D9" stroke-width="1"/>
-  <path d="M40 4 C 40 34, 4 34, 4 4" stroke="#9B87D4" stroke-width="0.8"/>
-</svg>
-<svg class="frame-corner fc-br" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M4 4 C 40 4, 4 40, 4 4" stroke="#9B87D4" stroke-width="1"/>
-  <path d="M4 4 L 60 4 M4 4 L 4 60" stroke="#B8935A" stroke-width="1"/>
-  <circle cx="4" cy="4" r="3" fill="#B8935A"/>
-  <path d="M20 4 C 20 20, 4 20, 4 4" stroke="#7BA7D9" stroke-width="1"/>
-  <path d="M40 4 C 40 34, 4 34, 4 4" stroke="#9B87D4" stroke-width="0.8"/>
-</svg>
+<button class="nav-arrow nav-prev" id="navPrev" type="button" aria-label="Önceki bölüm" title="Önceki bölüm">&#8249;</button>
+<button class="nav-arrow nav-next" id="navNext" type="button" aria-label="Sonraki bölüm" title="Sonraki bölüm">&#8250;</button>
 
-<header class="hero">
+<nav class="dot-nav" id="dotNav" aria-label="Bölüm gezinme">
+  <button class="dot" type="button" data-target="hero" data-emoji="👋" aria-label="Giriş"></button>
+  <button class="dot" type="button" data-target="hakkimda" data-emoji="🌱" aria-label="Hakkımda"></button>
+  <button class="dot" type="button" data-target="oyun" data-emoji="🎮" aria-label="Kurgusal Dünyalar"></button>
+  <button class="dot" type="button" data-target="gracie" data-emoji="💙" aria-label="Gracie"></button>
+  <button class="dot" type="button" data-target="yapayzeka" data-emoji="🤖" aria-label="Düşünen Makineler"></button>
+  <button class="dot" type="button" data-target="uygulamalar" data-emoji="💻" aria-label="Uygulamalar"></button>
+  <button class="dot" type="button" data-target="entelektuel" data-emoji="📚" aria-label="Teoriler ve Araştırmalar"></button>
+  <button class="dot" type="button" data-target="blog" data-emoji="✍️" aria-label="Blog"></button>
+  <button class="dot" type="button" data-target="baglantilar" data-emoji="🔗" aria-label="Bağlantılar"></button>
+  <button class="dot" type="button" data-target="fin" data-emoji="🌸" aria-label="Fin"></button>
+</nav>
+
+<div class="blobs" aria-hidden="true">
+  <span class="blob b1"></span>
+  <span class="blob b2"></span>
+  <span class="blob b3"></span>
+  <span class="blob b4"></span>
+</div>
+<div class="section-glow" id="sectionGlow" aria-hidden="true"></div>
+<div class="grain" id="grainLayer" aria-hidden="true"></div>
+<div class="petals" id="petalsLayer" aria-hidden="true">
+  <span class="petal" style="left:6%; width:11px; height:15px; animation-duration:24s; animation-delay:-3s; --petal-color:var(--red);"></span>
+  <span class="petal" style="left:17%; width:15px; height:19px; animation-duration:31s; animation-delay:-14s; --petal-color:var(--blue);"></span>
+  <span class="petal" style="left:28%; width:10px; height:13px; animation-duration:19s; animation-delay:-7s; --petal-color:var(--yellow);"></span>
+  <span class="petal" style="left:41%; width:14px; height:18px; animation-duration:27s; animation-delay:-2s; --petal-color:var(--orange);"></span>
+  <span class="petal" style="left:55%; width:12px; height:16px; animation-duration:22s; animation-delay:-11s; --petal-color:var(--pink);"></span>
+  <span class="petal" style="left:68%; width:16px; height:20px; animation-duration:33s; animation-delay:-5s; --petal-color:var(--red);"></span>
+  <span class="petal" style="left:79%; width:11px; height:14px; animation-duration:20s; animation-delay:-17s; --petal-color:var(--blue);"></span>
+  <span class="petal" style="left:91%; width:13px; height:17px; animation-duration:29s; animation-delay:-9s; --petal-color:var(--yellow);"></span>
+</div>
+
+<div class="hscroll" id="hscroll">
+
+<header class="panel hero" id="hero">
+  <svg class="desk-doodle dd-cup" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M10 18h22v10a11 11 0 0 1-11 11 11 11 0 0 1-11-11z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+    <path d="M32 21h3a5 5 0 0 1 0 10h-3" stroke="currentColor" stroke-width="1.6"/>
+    <path d="M14 8c1 2-1 3 0 5M20 7c1 2-1 3 0 5M26 8c1 2-1 3 0 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+  </svg>
+  <svg class="desk-doodle dd-plant" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M15 30h18l-2 12H17z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+    <path d="M24 30V16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+    <path d="M24 22c-6-2-9-8-9-8s7-1 11 3z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+    <path d="M24 18c5-3 7-9 7-9s-8 0-10 5z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+  </svg>
+  <svg class="desk-doodle dd-lamp" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M12 42h16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+    <path d="M20 42V30" stroke="currentColor" stroke-width="1.6"/>
+    <path d="M12 30h16l-4-14H16z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+    <circle cx="20" cy="10" r="4" stroke="currentColor" stroke-width="1.5"/>
+  </svg>
+  <img class="avatar" src="me.jpeg" alt="Tarık Hurma">
+  <p class="greeting" id="greeting"></p>
   <h1 class="name">Tarık Hurma</h1>
   <div class="rule wide"></div>
   <p class="position-statement" data-i18n="hero_position">Akıllı uygulamalar ve etkileşimli sistemler tasarlayan bir yazılım geliştirici &amp; yapay zekâ meraklısı.</p>
@@ -542,27 +943,59 @@
     <a class="cta-btn primary" href="tarik-hurma-cv.pdf" target="_blank" rel="noopener" data-i18n="cta_cv">Özgeçmişi İndir (PDF)</a>
     <a class="cta-btn" href="https://github.com/TarikSoftware" target="_blank" rel="noopener" data-i18n="cta_github">GitHub&rsquo;ta Gör</a>
   </div>
+
+  <div class="rule"></div>
+  <div class="mission" id="misyon">
+    <p data-i18n="mission_text">Yazılımı ve yapay zekâyı yalnızca teknik araçlar olarak değil; anlatı kurmanın, dünya inşa etmenin ve insan davranışını anlamanın bir uzantısı olarak görüyorum. Her proje, bir mühendislik problemi kadar bir merak ve estetik meselesidir &mdash; bu yüzden kod kadar kurgu, sistem kadar felsefe önemlidir.</p>
+    <div class="stack-pills">
+      <span class="tag">Python</span><span class="tag">FastAPI</span><span class="tag">MongoDB</span><span class="tag">Unity / C#</span><span class="tag">Pygame</span><span class="tag">PyOpenGL</span><span class="tag">PyQt6</span><span class="tag">LoRA</span><span class="tag">Qwen3 / LLM</span><span class="tag">Stable Diffusion</span><span class="tag" data-i18n="tag_game_theory">Oyun Teorisi</span>
+    </div>
+  </div>
 </header>
 
-<section class="mission" id="misyon">
-  <p data-i18n="mission_text">Yazılımı ve yapay zekâyı yalnızca teknik araçlar olarak değil; anlatı kurmanın, dünya inşa etmenin ve insan davranışını anlamanın bir uzantısı olarak görüyorum. Her proje, bir mühendislik problemi kadar bir merak ve estetik meselesidir &mdash; bu yüzden kod kadar kurgu, sistem kadar felsefe önemlidir.</p>
-  <div class="stack-pills">
-    <span class="tag">Python</span><span class="tag">FastAPI</span><span class="tag">MongoDB</span><span class="tag">Unity / C#</span><span class="tag">Pygame</span><span class="tag">PyOpenGL</span><span class="tag">PyQt6</span><span class="tag">LoRA</span><span class="tag">Qwen3 / LLM</span><span class="tag">Stable Diffusion</span><span class="tag" data-i18n="tag_game_theory">Oyun Teorisi</span>
+<!-- ================= HAKKIMDA / YOLCULUK ================= -->
+<section class="panel bap" id="hakkimda">
+  <div class="wrap">
+    <div class="bap-head">
+      <h2 class="bap-title" data-i18n="about_title">Hakkımda</h2>
+      <p class="bap-sub" data-i18n="about_sub">Meraktan zanaate uzanan bir yolculuk.</p>
+    </div>
+    <div class="about">
+      <p data-i18n="about_text">Kod yazmaya, bir dünyayı bir başkasına dokunulabilir kılma isteğiyle başladım &mdash; önce basit oyunlarla, sonra sistemlerle, şimdi ise yapay zekâ ile. Her yeni proje bana aynı soruyu sordu: bir fikir, gerçek hissettiren bir deneyime nasıl dönüşür? Bu soru beni önce oyun geliştirmeye, sonra yapay zekâ araştırmalarına, şimdi de kendi ekosistemlerimi kurmaya taşıdı. Bugün yazılımı, kurguyu ve felsefeyi aynı zanaatin farklı yüzleri olarak görüyorum.</p>
+    </div>
+    <div class="timeline-list">
+      <div class="tl-row">
+        <span class="tl-period" data-i18n="tl1_period">Başlangıç</span>
+        <h3 data-i18n="tl1_title">Kodla İlk Tanışma</h3>
+        <p data-i18n="tl1_desc">Önce C# Console üzerinden basit uygulamalar tasarlayarak başladım. Zamanla Java ve Python gibi dilleri de öğrenerek yazılım dünyasına giriş yaptım.</p>
+      </div>
+      <div class="tl-row">
+        <span class="tl-period" data-i18n="tl2_period">Sonraki Adım</span>
+        <h3 data-i18n="tl2_title">Kurgusal Dünyalar İnşa Etmek</h3>
+        <p data-i18n="tl2_desc">Unity oyun motorunu öğrenerek kendi oyunlarımı geliştirmeye başladım. Zamanla Python Pygame üzerinden de oyunlar geliştirmeye başladım.</p>
+      </div>
+      <div class="tl-row">
+        <span class="tl-period" data-i18n="tl3_period">Genişleme</span>
+        <h3 data-i18n="tl3_title">Yapay Zekâ Araştırmaları</h3>
+        <p data-i18n="tl3_desc">Gelişen yapay zekâ sistemlerini görünce araştırmaya başladım; kendi yapay zekâlarımı tasarlarken oyunlarıma da entegre etmeyi başardım.</p>
+      </div>
+      <div class="tl-row">
+        <span class="tl-period" data-i18n="tl4_period">Şimdi</span>
+        <h3 data-i18n="tl4_title">Gracie Ekosistemi</h3>
+        <p data-i18n="tl4_desc">Artık kendi uygulamalarımı ve oyunlarımı tasarlayabiliyorum; birbiriyle entegre birçok sistem geliştirebiliyor ve kendi ekosistemlerimi kurabiliyorum.</p>
+      </div>
+    </div>
   </div>
 </section>
 
-<div class="quote-divider">
-  <svg class="fleuron" viewBox="0 0 100 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M0 20 H38 M62 20 H100" stroke="currentColor" stroke-width="1"/>
-    <path d="M50 8 L58 20 L50 32 L42 20 Z" stroke="currentColor" stroke-width="1"/>
-    <circle cx="50" cy="20" r="2.5" fill="currentColor"/>
-  </svg>
-  <blockquote data-i18n="quote_bacon">&ldquo;Bilgi, kendi başına bir güçtür.&rdquo;</blockquote>
-  <cite>Francis Bacon</cite>
-</div>
-
 <!-- ================= BAP I — OYUN GELİŞTİRME ================= -->
-<section class="bap" id="oyun">
+<section class="panel bap accent-red" id="oyun">
+  <svg class="section-doodle sd-right" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <rect x="6" y="18" width="36" height="16" rx="8" stroke="currentColor" stroke-width="1.6"/>
+    <path d="M15 22v8M11 26h8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+    <circle cx="31" cy="23" r="1.8" fill="currentColor"/>
+    <circle cx="35" cy="27" r="1.8" fill="currentColor"/>
+  </svg>
   <div class="wrap">
     <div class="bap-head">
       <h2 class="bap-title" data-i18n="bap1_title">Kurgusal Dünyalar</h2>
@@ -579,7 +1012,7 @@
       </div>
       </div>
       <div class="card"><span class="cbl"></span><span class="cbr"></span>
-      <div class="card-thumb"><img src="images/glory-lavender-brew.jpg" alt="Glory Lavender Brew görsel önizleme" loading="lazy"></div>
+      <div class="card-thumb"><img src="images/glory-lavender-brew.png" alt="Glory Lavender Brew görsel önizleme" loading="lazy"></div>
       <div class="card-body">
         <h3><a href="https://www.youtube.com/watch?v=tkILkFgYfqE" target="_blank" rel="noopener">Glory Lavender Brew</a></h3>
         <p data-i18n="card_glb_desc">Unity&rsquo;de geliştirilen bir bitki pazarı simülasyonu. Yapay zeka destekli dinamik fiyatlandırma ve iki aşamalı bir mimariyle çalışan NPC diyalog sistemi içerir.</p>
@@ -614,22 +1047,109 @@
         <a class="src-link" href="https://github.com/TarikSoftware" target="_blank" rel="noopener" data-i18n="src_link">Kaynak Kodu &#8599;</a>
       </div>
       </div>
+      <div class="card"><span class="cbl"></span><span class="cbr"></span>
+      <div class="card-thumb"><img src="images/bubbydays.png" alt="Bubbly Days görsel önizleme" loading="lazy"></div>
+      <div class="card-body">
+        <h3><a href="https://github.com/TarikSoftware" target="_blank" rel="noopener">Bubbly Days</a></h3>
+        <p data-i18n="card_bubblydays_desc">Unity ve C# ile geliştirilen 3B bir oyun.</p>
+        <div class="tags"><span class="tag">Unity</span><span class="tag">C#</span><span class="tag">3D</span></div>
+        <a class="src-link" href="https://github.com/TarikSoftware" target="_blank" rel="noopener" data-i18n="src_link">Kaynak Kodu &#8599;</a>
+      </div>
+      </div>
+      <div class="card"><span class="cbl"></span><span class="cbr"></span>
+      <div class="card-thumb"><img src="images/wacriguna.png" alt="Wacriguna görsel önizleme" loading="lazy"></div>
+      <div class="card-body">
+        <h3><a href="https://sewileaportfolio.blogspot.com/2024/07/wacriguna.html" target="_blank" rel="noopener">Wacriguna</a></h3>
+        <p data-i18n="card_wacriguna_desc">Unity ve C# ile geliştirilen 2B bir oyun.</p>
+        <div class="tags"><span class="tag">Unity</span><span class="tag">C#</span><span class="tag">2D</span></div>
+        <a class="src-link" href="https://github.com/TarikSoftware" target="_blank" rel="noopener" data-i18n="src_link">Kaynak Kodu &#8599;</a>
+      </div>
+      </div>
+      <div class="card"><span class="cbl"></span><span class="cbr"></span>
+      <div class="card-thumb"><img src="images/bikofya.png" alt="Bikofya görsel önizleme" loading="lazy"></div>
+      <div class="card-body">
+        <h3><a href="https://sewileaportfolio.blogspot.com/2021/11/bikofya.html" target="_blank" rel="noopener">Bikofya</a></h3>
+        <p data-i18n="card_bikofya_desc">Unity ve C# ile geliştirilen 2B bir oyun projesi.</p>
+        <div class="tags"><span class="tag">Unity</span><span class="tag">C#</span><span class="tag">2D</span></div>
+        <a class="src-link" href="https://github.com/TarikSoftware" target="_blank" rel="noopener" data-i18n="src_link">Kaynak Kodu &#8599;</a>
+      </div>
+      </div>
+      <div class="card"><span class="cbl"></span><span class="cbr"></span>
+      <div class="card-thumb"><img src="images/piomu.png" alt="Piomu görsel önizleme" loading="lazy"></div>
+      <div class="card-body">
+        <h3><a href="https://sewileaportfolio.blogspot.com/2021/11/piomu.html" target="_blank" rel="noopener">Piomu</a></h3>
+        <p data-i18n="card_piomu_desc">Unity ve C# altyapısıyla hayata geçirilen 2B bir oyun.</p>
+        <div class="tags"><span class="tag">Unity</span><span class="tag">C#</span><span class="tag">2D</span></div>
+        <a class="src-link" href="https://github.com/TarikSoftware" target="_blank" rel="noopener" data-i18n="src_link">Kaynak Kodu &#8599;</a>
+      </div>
+      </div>
     </div>
   </div>
 </section>
 
-<div class="quote-divider">
-  <svg class="fleuron" viewBox="0 0 100 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M0 20 H38 M62 20 H100" stroke="currentColor" stroke-width="1"/>
-    <path d="M50 8 L58 20 L50 32 L42 20 Z" stroke="currentColor" stroke-width="1"/>
-    <circle cx="50" cy="20" r="2.5" fill="currentColor"/>
+<!-- ================= GRACIE ================= -->
+<section class="panel bap accent-blue" id="gracie">
+  <svg class="section-doodle sd-left" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M8 14a6 6 0 0 1 6-6h20a6 6 0 0 1 6 6v10a6 6 0 0 1-6 6H20l-8 7v-7a6 6 0 0 1-4-6z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+    <path d="M18 24l3-7 3 7M19.5 21.5h3M27 17v7M31 24v-5.5a2.5 2.5 0 1 1 2.5 2.5H31" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
   </svg>
-  <blockquote data-i18n="quote_lovelace">&ldquo;Hayal gücü, keşfin gerçek kapı bekçisidir.&rdquo;</blockquote>
-  <cite>Ada Lovelace</cite>
-</div>
+  <div class="wrap">
+    <div class="bap-head">
+      <h2 class="bap-title" data-i18n="bap_gracie_title">Gracie</h2>
+      <p class="bap-sub" data-i18n="bap_gracie_sub">One Click Away &mdash; LLM sistemi ve birçok uygulamayı içinde barındıran bir ekosistem projesi.</p>
+    </div>
+    <div class="cards">
+      <div class="card"><span class="cbl"></span><span class="cbr"></span>
+      <div class="card-thumb"><img src="images/gracie.png" alt="Gracie görsel önizleme" loading="lazy"></div>
+      <div class="card-body">
+        <h3><a href="https://github.com/TarikSoftware" target="_blank" rel="noopener">Gracie</a></h3>
+        <p data-i18n="card_gracie_desc">Gracie ekosisteminin çekirdeği &mdash; LLM destekli ana platform.</p>
+        <div class="tags"><span class="tag">LLM</span></div>
+        <a class="src-link" href="https://github.com/TarikSoftware" target="_blank" rel="noopener" data-i18n="src_link">Kaynak Kodu &#8599;</a>
+      </div>
+      </div>
+      <div class="card"><span class="cbl"></span><span class="cbr"></span>
+      <div class="card-thumb"><img src="images/gracie-creator.png" alt="Gracie Creator görsel önizleme" loading="lazy"></div>
+      <div class="card-body">
+        <h3><a href="https://github.com/TarikSoftware" target="_blank" rel="noopener">Gracie Creator</a></h3>
+        <p data-i18n="card_gracie_creator_desc">Ana platform için özgün karakterler üretmeyi sağlayan bir karakter oluşturma uygulaması.</p>
+        <div class="tags"><span class="tag">LLM</span></div>
+        <a class="src-link" href="https://github.com/TarikSoftware" target="_blank" rel="noopener" data-i18n="src_link">Kaynak Kodu &#8599;</a>
+      </div>
+      </div>
+      <div class="card"><span class="cbl"></span><span class="cbr"></span>
+      <div class="card-thumb"><img src="images/gracie-designer.png" alt="Gracie Designer görsel önizleme" loading="lazy"></div>
+      <div class="card-body">
+        <h3><a href="https://github.com/TarikSoftware" target="_blank" rel="noopener">Gracie Designer</a></h3>
+        <p data-i18n="card_gracie_designer_desc">Gracie ekosistemi için logo tasarımına özel geliştirilmiş bir tasarım uygulaması.</p>
+        <div class="tags"><span class="tag">LLM</span></div>
+        <a class="src-link" href="https://github.com/TarikSoftware" target="_blank" rel="noopener" data-i18n="src_link">Kaynak Kodu &#8599;</a>
+      </div>
+      </div>
+      <div class="card"><span class="cbl"></span><span class="cbr"></span>
+      <div class="card-thumb"><img src="images/gracie-ascendancy.png" alt="Gracie Ascendancy görsel önizleme" loading="lazy"></div>
+      <div class="card-body">
+        <h3><a href="https://github.com/TarikSoftware" target="_blank" rel="noopener">Gracie Ascendancy</a></h3>
+        <p data-i18n="card_gracie_ascendancy_desc">Gracie'nin diyalog sistemini geliştirmek için tasarlanmış bir uygulama.</p>
+        <div class="tags"><span class="tag">LLM</span></div>
+        <a class="src-link" href="https://github.com/TarikSoftware" target="_blank" rel="noopener" data-i18n="src_link">Kaynak Kodu &#8599;</a>
+      </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- ================= BAP II — YAPAY ZEKA ================= -->
-<section class="bap" id="yapayzeka">
+<section class="panel bap accent-blue" id="yapayzeka">
+  <svg class="section-doodle sd-right" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <rect x="10" y="16" width="28" height="20" rx="6" stroke="currentColor" stroke-width="1.6"/>
+    <path d="M24 16v-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+    <circle cx="24" cy="8" r="2" stroke="currentColor" stroke-width="1.4"/>
+    <circle cx="18" cy="25" r="2.2" fill="currentColor"/>
+    <circle cx="30" cy="25" r="2.2" fill="currentColor"/>
+    <path d="M18 31h12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+    <path d="M6 22v6M42 22v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+  </svg>
   <div class="wrap">
     <div class="bap-head">
       <h2 class="bap-title" data-i18n="bap2_title">Düşünen Makineler</h2>
@@ -658,18 +1178,13 @@
   </div>
 </section>
 
-<div class="quote-divider">
-  <svg class="fleuron" viewBox="0 0 100 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M0 20 H38 M62 20 H100" stroke="currentColor" stroke-width="1"/>
-    <path d="M50 8 L58 20 L50 32 L42 20 Z" stroke="currentColor" stroke-width="1"/>
-    <circle cx="50" cy="20" r="2.5" fill="currentColor"/>
-  </svg>
-  <blockquote data-i18n="quote_goethe">&ldquo;Bilmek yetmez, uygulamak gerekir; istemek yetmez, yapmak gerekir.&rdquo;</blockquote>
-  <cite>Johann Wolfgang von Goethe</cite>
-</div>
-
 <!-- ================= BAP III — UYGULAMALAR ================= -->
-<section class="bap" id="uygulamalar">
+<section class="panel bap accent-yellow" id="uygulamalar">
+  <svg class="section-doodle sd-left" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M34 6c3 0 6 3 6 6 0 2-1 3-2 4L21 33l-8 2 2-8L32 8c1-1 2-2 2-2z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+    <path d="M13 35c-2 3-4 4-7 4 2-3 1-5 0-7" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+    <path d="M28 12l6 6" stroke="currentColor" stroke-width="1.4"/>
+  </svg>
   <div class="wrap">
     <div class="bap-head">
       <h2 class="bap-title" data-i18n="bap3_title">Uygulamalar</h2>
@@ -707,17 +1222,11 @@
   </div>
 </section>
 
-<div class="quote-divider">
-  <svg class="fleuron" viewBox="0 0 100 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M0 20 H38 M62 20 H100" stroke="currentColor" stroke-width="1"/>
-    <path d="M50 8 L58 20 L50 32 L42 20 Z" stroke="currentColor" stroke-width="1"/>
-    <circle cx="50" cy="20" r="2.5" fill="currentColor"/>
+<section class="panel bap accent-orange" id="entelektuel">
+  <svg class="section-doodle sd-right" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M24 12c-3-3-8-4-14-3v22c6-1 11 0 14 3 3-3 8-4 14-3V9c-6-1-11 0-14 3z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+    <path d="M24 12v22" stroke="currentColor" stroke-width="1.4"/>
   </svg>
-  <blockquote data-i18n="quote_nietzsche">&ldquo;Yıldızları doğurabilmek için insanın içinde hâlâ kaos barındırması gerekir.&rdquo;</blockquote>
-  <cite>Friedrich Nietzsche</cite>
-</div>
-
-<section class="bap" id="entelektuel">
   <div class="wrap">
     <div class="bap-head">
       <h2 class="bap-title" data-i18n="bap4_title">Teoriler &amp; Araştırmalar</h2>
@@ -742,9 +1251,47 @@
   </div>
 </section>
 
+<!-- ================= BLOG ÖNE ÇIKANLAR ================= -->
+<section class="panel bap blog-panel" id="blog">
+  <div class="wrap">
+    <div class="bap-head">
+      <h2 class="bap-title" data-i18n="blog_title">Blogdan Öne Çıkanlar</h2>
+      <p class="bap-sub" data-i18n="blog_sub">Projelerin arkasındaki süreci yazıya döktüğüm yerler.</p>
+    </div>
+    <div class="cards">
+      <div class="card"><span class="cbl"></span><span class="cbr"></span>
+      <div class="card-thumb"><img src="images/bubbydays.png" alt="Bubbly Days blog yazısı önizleme" loading="lazy"></div>
+      <div class="card-body">
+        <h3><a href="https://sewileaportfolio.blogspot.com/" target="_blank" rel="noopener">Bubbly Days</a></h3>
+        <p data-i18n="blog_bubblydays_desc">Bubbly Days&rsquo;in geliştirme sürecine dair blog yazım.</p>
+        <div class="tags"><span class="tag" data-i18n="tag_blog">Blog Yazısı</span></div>
+        <a class="src-link" href="https://sewileaportfolio.blogspot.com/" target="_blank" rel="noopener" data-i18n="blog_read_link">Yazıyı Oku &#8599;</a>
+      </div>
+      </div>
+      <div class="card"><span class="cbl"></span><span class="cbr"></span>
+      <div class="card-thumb"><img src="images/glory-lavender-brew.png" alt="Glory Lavender Brew blog yazısı önizleme" loading="lazy"></div>
+      <div class="card-body">
+        <h3><a href="https://sewileaportfolio.blogspot.com/" target="_blank" rel="noopener">Glory Lavender Brew</a></h3>
+        <p data-i18n="blog_glb_desc">Glory Lavender Brew&rsquo;un tasarım ve geliştirme sürecine dair blog yazım.</p>
+        <div class="tags"><span class="tag" data-i18n="tag_blog">Blog Yazısı</span></div>
+        <a class="src-link" href="https://sewileaportfolio.blogspot.com/" target="_blank" rel="noopener" data-i18n="blog_read_link">Yazıyı Oku &#8599;</a>
+      </div>
+      </div>
+      <div class="card"><span class="cbl"></span><span class="cbr"></span>
+      <div class="card-thumb"><img src="images/gracie.png" alt="Gracie blog yazısı önizleme" loading="lazy"></div>
+      <div class="card-body">
+        <h3><a href="https://sewileaportfolio.blogspot.com/" target="_blank" rel="noopener">Gracie</a></h3>
+        <p data-i18n="blog_gracie_desc">Gracie ekosistemini kurma yolculuğuma dair blog yazım.</p>
+        <div class="tags"><span class="tag" data-i18n="tag_blog">Blog Yazısı</span></div>
+        <a class="src-link" href="https://sewileaportfolio.blogspot.com/" target="_blank" rel="noopener" data-i18n="blog_read_link">Yazıyı Oku &#8599;</a>
+      </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- ================= BAĞLANTILAR ================= -->
-<section class="links" id="baglantilar">
+<section class="panel links" id="baglantilar">
   <div class="wrap">
     <div class="bap-head">
       <p class="bap-num" data-i18n="links_kicker">Kartvizit Kabinesi</p>
@@ -752,39 +1299,39 @@
       <p class="bap-sub" data-i18n="links_sub">Çalışmaların ve izlerin dağıldığı adresler.</p>
     </div>
     <div class="card-index">
-      <a class="calling-card" href="https://github.com/TarikSoftware" target="_blank" rel="noopener">
+      <a class="calling-card" href="https://github.com/TarikSoftware" target="_blank" rel="noopener" style="--seal-color:var(--red);">
         <span class="seal">G</span>
         <span class="cc-text"><span class="cc-platform">GitHub</span><span class="cc-handle">TarikSoftware</span></span>
       </a>
-      <a class="calling-card" href="https://www.linkedin.com/in/tarik-hurma/" target="_blank" rel="noopener">
+      <a class="calling-card" href="https://www.linkedin.com/in/tarik-hurma/" target="_blank" rel="noopener" style="--seal-color:var(--blue);">
         <span class="seal">L</span>
         <span class="cc-text"><span class="cc-platform">LinkedIn</span><span class="cc-handle">tarik-hurma</span></span>
       </a>
-      <a class="calling-card" href="https://sewilea.itch.io/" target="_blank" rel="noopener">
+      <a class="calling-card" href="https://sewilea.itch.io/" target="_blank" rel="noopener" style="--seal-color:var(--yellow);">
         <span class="seal">I</span>
         <span class="cc-text"><span class="cc-platform">itch.io</span><span class="cc-handle">sewilea</span></span>
       </a>
-      <a class="calling-card" href="https://www.goodreads.com/user/show/159621545-tarik-hurma" target="_blank" rel="noopener">
+      <a class="calling-card" href="https://www.goodreads.com/user/show/159621545-tarik-hurma" target="_blank" rel="noopener" style="--seal-color:var(--orange);">
         <span class="seal">R</span>
         <span class="cc-text"><span class="cc-platform">Goodreads</span><span class="cc-handle">Tarık Hurma</span></span>
       </a>
-      <a class="calling-card" href="https://open.spotify.com/user/flwvim599fj0r3tfo477473m6" target="_blank" rel="noopener">
+      <a class="calling-card" href="https://open.spotify.com/user/flwvim599fj0r3tfo477473m6" target="_blank" rel="noopener" style="--seal-color:var(--pink);">
         <span class="seal">S</span>
         <span class="cc-text"><span class="cc-platform">Spotify</span><span class="cc-handle">Çalma Listeleri</span></span>
       </a>
-      <a class="calling-card" href="https://www.youtube.com/@sewilea" target="_blank" rel="noopener">
+      <a class="calling-card" href="https://www.youtube.com/@sewilea" target="_blank" rel="noopener" style="--seal-color:var(--red);">
         <span class="seal">Y</span>
         <span class="cc-text"><span class="cc-platform">YouTube</span><span class="cc-handle">@sewilea</span></span>
       </a>
-      <a class="calling-card" href="https://sewileaportfolio.blogspot.com/" target="_blank" rel="noopener">
+      <a class="calling-card" href="https://sewileaportfolio.blogspot.com/" target="_blank" rel="noopener" style="--seal-color:var(--blue);">
         <span class="seal">B</span>
         <span class="cc-text"><span class="cc-platform">Blog</span><span class="cc-handle">sewileaportfolio</span></span>
       </a>
-      <a class="calling-card" href="https://www.instagram.com/tarikxpw/" target="_blank" rel="noopener">
+      <a class="calling-card" href="https://www.instagram.com/tarikxpw/" target="_blank" rel="noopener" style="--seal-color:var(--yellow);">
         <span class="seal">@</span>
         <span class="cc-text"><span class="cc-platform">Instagram</span><span class="cc-handle">tarikxpw</span></span>
       </a>
-      <a class="calling-card" href="https://www.instagram.com/sewileakun/" target="_blank" rel="noopener">
+      <a class="calling-card" href="https://www.instagram.com/sewileakun/" target="_blank" rel="noopener" style="--seal-color:var(--orange);">
         <span class="seal">@</span>
         <span class="cc-text"><span class="cc-platform">Instagram</span><span class="cc-handle">sewileakun</span></span>
       </a>
@@ -792,16 +1339,21 @@
   </div>
 </section>
 
-<footer>
+<footer class="panel" id="fin">
   <svg class="fleuron" viewBox="0 0 100 40" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M0 20 H38 M62 20 H100" stroke="currentColor" stroke-width="1"/>
     <path d="M50 8 L58 20 L50 32 L42 20 Z" stroke="currentColor" stroke-width="1"/>
     <circle cx="50" cy="20" r="2.5" fill="currentColor"/>
   </svg>
-  <blockquote data-i18n="quote_curie">&ldquo;Hayatta hiçbir şeyden korkulmamalı, yalnızca anlaşılmalıdır. Şimdi, daha az korkmak için daha çok anlama zamanıdır.&rdquo;</blockquote>
-  <cite>Marie Curie</cite>
+  <h2 class="bap-title" data-i18n="contact_title">Benimle İletişime Geç</h2>
+  <p class="bap-sub" data-i18n="contact_sub">Bir proje, bir fikir ya da sadece merhaba demek için &mdash; yazman yeter.</p>
+  <div class="hero-cta">
+    <a class="cta-btn primary" href="https://www.linkedin.com/in/tarik-hurma/" target="_blank" rel="noopener" data-i18n="contact_cta">İletişime Geç</a>
+  </div>
   <p class="fin">Tarık Hurma &middot; <span data-i18n="footer_fin">Fin</span></p>
 </footer>
+
+</div><!-- /.hscroll -->
 
 <script>
   const io = new IntersectionObserver((entries) => {
@@ -815,18 +1367,195 @@
 
   document.querySelectorAll('.card, .calling-card').forEach(el => io.observe(el));
 
+  /* ---------- HORIZONTAL FILMSTRIP NAVIGATION ---------- */
+  const hscroll = document.getElementById('hscroll');
+  const panels = Array.from(document.querySelectorAll('.panel'));
+  const dotNav = document.getElementById('dotNav');
+  const dots = dotNav ? Array.from(dotNav.querySelectorAll('.dot')) : [];
+  const navPrev = document.getElementById('navPrev');
+  const navNext = document.getElementById('navNext');
+
+  function scrollToPanel(id){
+    const el = document.getElementById(id);
+    if(el) el.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
+  }
+
+  dots.forEach(dot => {
+    dot.addEventListener('click', () => scrollToPanel(dot.dataset.target));
+  });
+
+  function currentPanelIndex(){
+    const center = hscroll.scrollLeft + hscroll.clientWidth / 2;
+    let idx = 0;
+    let best = Infinity;
+    panels.forEach((p, i) => {
+      const mid = p.offsetLeft + p.offsetWidth / 2;
+      const d = Math.abs(mid - center);
+      if(d < best){ best = d; idx = i; }
+    });
+    return idx;
+  }
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- WELCOME CURTAIN ---------- */
+  const curtain = document.getElementById('curtain');
+  if(curtain){
+    if(prefersReducedMotion){
+      curtain.remove();
+    } else {
+      requestAnimationFrame(() => {
+        curtain.classList.add('opening');
+        setTimeout(() => curtain.remove(), 1000);
+      });
+    }
+  }
+
+  function burstConfetti(){
+    if(prefersReducedMotion) return;
+    const container = document.createElement('div');
+    container.className = 'confetti-burst';
+    container.setAttribute('aria-hidden', 'true');
+    const colors = ['var(--red)', 'var(--blue)', 'var(--yellow)', 'var(--orange)', 'var(--pink)'];
+    for(let i = 0; i < 28; i++){
+      const piece = document.createElement('span');
+      piece.className = 'confetti-piece';
+      const angle = Math.random() * 360;
+      const distance = 120 + Math.random() * 180;
+      const dx = Math.cos(angle * Math.PI / 180) * distance;
+      const dy = Math.sin(angle * Math.PI / 180) * distance - 60;
+      piece.style.setProperty('--dx', dx + 'px');
+      piece.style.setProperty('--dy', dy + 'px');
+      piece.style.setProperty('--rot', (Math.random() * 720 - 360) + 'deg');
+      piece.style.background = colors[i % colors.length];
+      piece.style.left = '50%';
+      piece.style.top = '38%';
+      piece.style.animationDelay = (Math.random() * 0.15) + 's';
+      container.appendChild(piece);
+    }
+    document.body.appendChild(container);
+    setTimeout(() => container.remove(), 1800);
+  }
+
+  let finCelebrated = false;
+  const grainLayer = document.getElementById('grainLayer');
+  const petalsLayer = document.getElementById('petalsLayer');
+  const sectionGlow = document.getElementById('sectionGlow');
+
+  function updateParallax(){
+    if(prefersReducedMotion) return;
+    const offset = hscroll.scrollLeft;
+    if(grainLayer) grainLayer.style.transform = `translateX(${-offset * 0.05}px)`;
+    if(petalsLayer) petalsLayer.style.transform = `translateX(${-offset * 0.12}px)`;
+  }
+
+  function updateSectionGlow(){
+    if(!sectionGlow) return;
+    const activeEl = panels[currentPanelIndex()];
+    const accent = getComputedStyle(activeEl).getPropertyValue('--accent').trim();
+    if(accent) sectionGlow.style.backgroundColor = accent;
+  }
+
+  function updateActiveDot(){
+    if(!dots.length) return;
+    const activeEl = panels[currentPanelIndex()];
+    dots.forEach(d => d.classList.toggle('active', d.dataset.target === activeEl.id));
+    updateParallax();
+    updateSectionGlow();
+    if(activeEl.id === 'fin' && !finCelebrated){
+      finCelebrated = true;
+      burstConfetti();
+    }
+  }
+
+  let scrollRAF = null;
+  hscroll.addEventListener('scroll', () => {
+    if(scrollRAF) return;
+    scrollRAF = requestAnimationFrame(() => { updateActiveDot(); scrollRAF = null; });
+  });
+
+  function goPrev(){
+    const idx = currentPanelIndex();
+    const target = idx > 0 ? panels[idx - 1] : panels[panels.length - 1];
+    target.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
+  }
+  function goNext(){
+    const idx = currentPanelIndex();
+    const target = idx < panels.length - 1 ? panels[idx + 1] : panels[0];
+    target.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
+  }
+  navPrev.addEventListener('click', goPrev);
+  navNext.addEventListener('click', goNext);
+
+  document.addEventListener('keydown', (e) => {
+    if(e.key === 'ArrowRight' || e.key === 'PageDown'){ e.preventDefault(); goNext(); }
+    else if(e.key === 'ArrowLeft' || e.key === 'PageUp'){ e.preventDefault(); goPrev(); }
+  });
+
+  hscroll.addEventListener('wheel', (e) => {
+    if(Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return;
+    const panel = e.target.closest('.panel');
+    if(panel){
+      const atTop = panel.scrollTop <= 0;
+      const atBottom = panel.scrollTop + panel.clientHeight >= panel.scrollHeight - 1;
+      if(e.deltaY < 0 && !atTop) return;
+      if(e.deltaY > 0 && !atBottom) return;
+    }
+    e.preventDefault();
+    hscroll.scrollLeft += e.deltaY;
+  }, { passive: false });
+
+  updateActiveDot();
+
+  /* ---------- CARD 3D TILT ---------- */
+  if(!prefersReducedMotion){
+    document.querySelectorAll('.card').forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const px = (e.clientX - rect.left) / rect.width;
+        const py = (e.clientY - rect.top) / rect.height;
+        const rotateY = (px - 0.5) * 10;
+        const rotateX = (0.5 - py) * 10;
+        card.style.transition = 'transform 0.1s ease-out, box-shadow 0.3s ease, border-color 0.4s ease';
+        card.style.transform = `translateY(0) perspective(700px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transition = 'transform 0.4s ease, box-shadow 0.3s ease, border-color 0.4s ease';
+        card.style.transform = '';
+      });
+    });
+  }
+
+  /* ---------- SOFT UI CLICK SOUND ---------- */
+  let audioCtx = null;
+  function playClickPop(){
+    try{
+      if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(520, audioCtx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(200, audioCtx.currentTime + 0.12);
+      gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.15);
+      osc.connect(gain).connect(audioCtx.destination);
+      osc.start();
+      osc.stop(audioCtx.currentTime + 0.16);
+    } catch(err){}
+  }
+
   const bgAudio = document.getElementById('bgAudio');
   const musicToggle = document.getElementById('musicToggle');
   let isPlaying = false;
 
   const musicTitles = {
     tr: {
-      play: "The Pendulum's Grace — çalmak için tıkla",
-      pause: "The Pendulum's Grace — durdurmak için tıkla"
+      play: "Flor en el Asfalto — çalmak için tıkla",
+      pause: "Flor en el Asfalto — durdurmak için tıkla"
     },
     en: {
-      play: "The Pendulum's Grace — click to play",
-      pause: "The Pendulum's Grace — click to pause"
+      play: "Flor en el Asfalto — click to play",
+      pause: "Flor en el Asfalto — click to pause"
     }
   };
 
@@ -846,6 +1575,7 @@
       musicToggle.classList.add('is-playing');
     }
     isPlaying = !isPlaying;
+    document.body.classList.toggle('music-playing', isPlaying);
     updateMusicTitle();
   });
 
@@ -873,11 +1603,32 @@
       tag_education: "Education",
       tag_freedom: "Freedom",
       hero_lede: "True education lets a person discover their own individuality. And a person who discovers their individuality attains real freedom — and knows how to protect it.",
+      about_title: "About Me",
+      about_sub: "A journey from curiosity to craft.",
+      about_text: "I started writing code out of a desire to make a world touchable to someone else &mdash; first with simple games, then with systems, and now with AI. Every new project asked me the same question: how does an idea become an experience that feels real? That question led me first into game development, then into AI research, and now into building my own ecosystems. Today I see software, fiction, and philosophy as different faces of the same craft.",
+      tl1_period: "The Beginning",
+      tl1_title: "First Encounter With Code",
+      tl1_desc: "I started out designing simple applications through the C# Console. Over time I picked up languages like Java and Python, and stepped fully into the world of software.",
+      tl2_period: "Next Step",
+      tl2_title: "Building Fictional Worlds",
+      tl2_desc: "I learned the Unity game engine and started developing my own games. Over time I also started building games with Python and Pygame.",
+      tl3_period: "Expansion",
+      tl3_title: "AI Research",
+      tl3_desc: "Watching AI systems evolve, I started researching them myself &mdash; and managed to integrate the AIs I designed into my own games.",
+      tl4_period: "Now",
+      tl4_title: "The Gracie Ecosystem",
+      tl4_desc: "Now I can design my own applications and games, build many interconnected systems, and put together entire ecosystems of my own.",
+      blog_title: "From the Blog",
+      blog_sub: "Where I write about the process behind the projects.",
+      blog_bubblydays_desc: "My blog post on the development process of Bubbly Days.",
+      blog_glb_desc: "My blog post on the design and development process of Glory Lavender Brew.",
+      blog_gracie_desc: "My blog post on the journey of building the Gracie ecosystem.",
+      tag_blog: "Blog Post",
+      blog_read_link: "Read the Post &#8599;",
       cta_cv: "Download Résumé (PDF)",
       cta_github: "View on GitHub",
       mission_text: "I see software and AI not merely as technical tools, but as an extension of storytelling, world-building, and understanding human behavior. Every project is as much a matter of curiosity and aesthetics as it is an engineering problem — which is why fiction matters as much as code, and philosophy as much as systems.",
       tag_game_theory: "Game Theory",
-      quote_bacon: "&ldquo;Knowledge itself is power.&rdquo;",
       bap1_title: "Fictional Worlds",
       bap1_sub: "Every world exists with its own physics and economy.",
       card_wynox_desc: "A 3D voxel game written in Python, pygame, and PyOpenGL. Features infinite map streaming and a custom VBO-based render engine.",
@@ -888,13 +1639,21 @@
       card_swalera_desc: "An ongoing project blending fictional world-building with game design.",
       tag_game_design: "Game Design",
       card_mioun_desc: "A game project where I honed my 2D multiplayer skills.",
-      quote_lovelace: "&ldquo;Imagination is the true gatekeeper of discovery.&rdquo;",
+      card_bubblydays_desc: "A 3D game built with Unity and C#.",
+      card_wacriguna_desc: "A 2D game built with Unity and C#.",
+      card_bikofya_desc: "A 2D game project built with Unity and C#.",
+      card_piomu_desc: "A 2D game brought to life with a Unity and C# foundation.",
+      bap_gracie_title: "Gracie",
+      bap_gracie_sub: "One Click Away &mdash; an ecosystem project housing an LLM system and many applications.",
+      card_gracie_desc: "The core of the Gracie ecosystem &mdash; an LLM-powered platform.",
+      card_gracie_creator_desc: "A character-generation app that creates original characters for the main platform.",
+      card_gracie_designer_desc: "A design app built specifically for logo design within the Gracie ecosystem.",
+      card_gracie_ascendancy_desc: "An app designed to enhance Gracie's dialogue system.",
       bap2_title: "Thinking Machines",
       bap2_sub: "Small experiments on the edge of mechanical reasoning.",
       card_ouirelle_desc: "A custom AI assistant platform running &ldquo;Lotus,&rdquo; a LoRA fine-tuned Qwen3-8B model. Features JWT and API-key authentication, live streaming via SSE, and Peach AI integration for image generation.",
       card_peach_desc: "A Stable Diffusion-based image generation module, triggered by a <em>/draw</em> command embedded in the chat interface.",
       tag_image_gen: "Image Generation",
-      quote_goethe: "&ldquo;Knowing is not enough, we must apply; willing is not enough, we must do.&rdquo;",
       bap3_title: "Applications",
       bap3_sub: "Atelier Numérique — ideas turned into products.",
       card_pymelon_desc: "An IDE application built with Python and PyQt6.",
@@ -902,7 +1661,6 @@
       tag_design: "Design",
       card_fantastic_desc: "A social media project with a Python backend.",
       tag_social_media: "Social Media",
-      quote_nietzsche: "&ldquo;One must still have chaos in oneself to give birth to a dancing star.&rdquo;",
       bap4_title: "Theories &amp; Research",
       bap4_sub: "The discipline beyond code — reading, questioning, understanding systems.",
       card_theory1_desc: "Academic research, supported by charts, examining strategic decision-making through the lens of game theory.",
@@ -912,7 +1670,9 @@
       links_kicker: "Calling Card Cabinet",
       links_title: "Where I Can Be Found",
       links_sub: "The addresses where the work and traces are scattered.",
-      quote_curie: "&ldquo;Nothing in life is to be feared, it is only to be understood. Now is the time to understand more, so that we may fear less.&rdquo;",
+      contact_title: "Get In Touch",
+      contact_sub: "For a project, an idea, or just to say hello &mdash; a message is all it takes.",
+      contact_cta: "Get In Touch",
       footer_fin: "The End",
       src_link: "Source Code &#8599;"
     }
@@ -938,6 +1698,17 @@
   let currentLang = 'tr';
   const langToggle = document.getElementById('langToggle');
 
+  function updateGreeting(){
+    const el = document.getElementById('greeting');
+    if(!el) return;
+    const h = new Date().getHours();
+    const greetings = {
+      tr: h < 6 ? 'İyi geceler' : h < 11 ? 'Günaydın' : h < 17 ? 'İyi günler' : h < 21 ? 'İyi akşamlar' : 'İyi geceler',
+      en: h < 6 ? 'Good night' : h < 11 ? 'Good morning' : h < 17 ? 'Good afternoon' : h < 21 ? 'Good evening' : 'Good night'
+    };
+    el.textContent = greetings[currentLang];
+  }
+
   function setLanguage(lang){
     currentLang = lang;
     const dict = lang === 'en' ? translations.en : {};
@@ -958,10 +1729,36 @@
     document.documentElement.lang = lang;
     langToggle.textContent = lang === 'en' ? 'TR' : 'EN';
     updateMusicTitle();
+    updateGreeting();
   }
+
+  updateGreeting();
 
   langToggle.addEventListener('click', () => {
     setLanguage(currentLang === 'tr' ? 'en' : 'tr');
+  });
+
+  /* ---------- CANDLELIGHT CURSOR ---------- */
+  const candleGlow = document.createElement('div');
+  candleGlow.className = 'candle-glow';
+  candleGlow.setAttribute('aria-hidden', 'true');
+  document.body.appendChild(candleGlow);
+  if(!prefersReducedMotion && window.matchMedia('(hover:hover)').matches){
+    let candleRAF = null;
+    document.addEventListener('mousemove', (e) => {
+      candleGlow.classList.add('is-active');
+      if(candleRAF) return;
+      candleRAF = requestAnimationFrame(() => {
+        candleGlow.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+        candleRAF = null;
+      });
+    });
+    document.addEventListener('mouseleave', () => candleGlow.classList.remove('is-active'));
+  }
+
+  /* ---------- CLICK SOUND ON ALL INTERACTIVE CONTROLS ---------- */
+  document.querySelectorAll('.theme-toggle, .nav-arrow, .dot, .cta-btn, .calling-card').forEach(el => {
+    el.addEventListener('click', () => playClickPop());
   });
 </script>
 
